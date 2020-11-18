@@ -91,9 +91,10 @@ namespace steamPlayerInvestigator
             response = await client.GetAsync(url);
             response.EnsureSuccessStatusCode();
             string respFriendsSummary = await response.Content.ReadAsStringAsync();
-            SummaryRoot steamUserFriendsSummary = JsonConvert.DeserializeObject<SummaryRoot>(respFriendsSummary);
+            List<SummaryRoot> steamUserFriendsSummary = new List<SummaryRoot>();
+            steamUserFriendsSummary.Add(JsonConvert.DeserializeObject<SummaryRoot>(respFriendsSummary));
 
-            steamPlayerSummary steamPlayerSummaryForm = new steamPlayerSummary(steamUser.response.players[0], steamUserBans.players[0], steamUserFriends.friendslist, steamUserFriendsSummary.response);
+            steamPlayerSummary steamPlayerSummaryForm = new steamPlayerSummary(steamUser.response.players[0], steamUserBans.players[0], steamUserFriends.friendslist, steamUserFriendsSummary);
             steamPlayerSummaryForm.Show();
             
         }

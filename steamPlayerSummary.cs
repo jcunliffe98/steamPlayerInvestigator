@@ -14,7 +14,7 @@ namespace steamPlayerInvestigator
 {
     public partial class steamPlayerSummary : Form
     {
-        public steamPlayerSummary(Player pSteamUser, PlayerBans pSteamUserBans, FriendsList pSteamUserFriends, SummaryResponse pSteamFriendsSummary)
+        public steamPlayerSummary(Player pSteamUser, PlayerBans pSteamUserBans, FriendsList pSteamUserFriends, List<SummaryRoot> pSteamFriendsSummary)
         {
             InitializeComponent();
 
@@ -100,9 +100,12 @@ namespace steamPlayerInvestigator
                 economyBanLabel.ForeColor = Color.Red;
             }
 
-            for(int i = 0; i < pSteamFriendsSummary.players.Count; i++)
+            for(int i = 0; i < pSteamFriendsSummary.Count; i++)
             {
-                friendsListBox.Items.Add(pSteamFriendsSummary.players[i].personaname);
+                for(int o = 0; o < pSteamFriendsSummary[i].response.players.Count; o++)
+                {
+                    friendsListBox.Items.Add(pSteamFriendsSummary[i].response.players[o].personaname);
+                }
             }
         }
 
