@@ -81,18 +81,45 @@ namespace steamPlayerInvestigator
             string respFriends = await response.Content.ReadAsStringAsync();
             FriendsRoot steamUserFriends = JsonConvert.DeserializeObject<FriendsRoot>(respFriends);
 
-            url = "/ISteamUser/GetPlayerSummaries/v2/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=";
-
-            for (int i = 0; i < steamUserFriends.friendslist.friends.Count; i++)
-            {
-                url += steamUserFriends.friendslist.friends[i].steamid + "?";
-            }
-
-            response = await client.GetAsync(url);
-            response.EnsureSuccessStatusCode();
-            string respFriendsSummary = await response.Content.ReadAsStringAsync();
+            int noOfLoops = (steamUserFriends.friendslist.friends.Count / 100) + 1;
             List<SummaryRoot> steamUserFriendsSummary = new List<SummaryRoot>();
-            steamUserFriendsSummary.Add(JsonConvert.DeserializeObject<SummaryRoot>(respFriendsSummary));
+
+            if (steamUserFriends.friendslist.friends.Count <= 100)
+            {
+                url = "/ISteamUser/GetPlayerSummaries/v2/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=";
+                for (int i = 0; i < steamUserFriends.friendslist.friends.Count; i++)
+                {
+                    url += steamUserFriends.friendslist.friends[i].steamid + "?";
+                }
+                response = await client.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+                string respFriendsSummary = await response.Content.ReadAsStringAsync();
+                steamUserFriendsSummary.Add(JsonConvert.DeserializeObject<SummaryRoot>(respFriendsSummary));
+            }
+            else
+            {
+                int overallCount = 0;
+
+                for (int a = 0; a < noOfLoops; a++)
+                {
+                    url = "/ISteamUser/GetPlayerSummaries/v2/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=";
+
+                    for (int i = a * 100; i < (a + 1) * 100; i++)
+                    {
+                        overallCount++;
+                        url += steamUserFriends.friendslist.friends[i].steamid + "?";
+                        if(overallCount == steamUserFriends.friendslist.friends.Count)
+                        {
+                            break;
+                        }
+                    }
+
+                    response = await client.GetAsync(url);
+                    response.EnsureSuccessStatusCode();
+                    string respFriendsSummary = await response.Content.ReadAsStringAsync();
+                    steamUserFriendsSummary.Add(JsonConvert.DeserializeObject<SummaryRoot>(respFriendsSummary));
+                }
+            }
 
             steamPlayerSummary steamPlayerSummaryForm = new steamPlayerSummary(steamUser.response.players[0], steamUserBans.players[0], steamUserFriends.friendslist, steamUserFriendsSummary);
             steamPlayerSummaryForm.Show();
