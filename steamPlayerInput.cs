@@ -68,6 +68,12 @@ namespace steamPlayerInvestigator
                 inputTextBox.Clear();
                 return;
             }
+            else if(steamUser.response.players[0].communityvisibilitystate != 3)
+            {
+                MessageBox.Show("This profile is private");
+                inputTextBox.Clear();
+                return;
+            }
 
             url = "/ISteamUser/GetPlayerBans/v1/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=" + pInputSteamId;
             response = await client.GetAsync(url);
@@ -121,7 +127,9 @@ namespace steamPlayerInvestigator
                 }
             }
 
-            steamPlayerSummary steamPlayerSummaryForm = new steamPlayerSummary(steamUser.response.players[0], steamUserBans.players[0], steamUserFriends.friendslist, steamUserFriendsSummary);
+            int backButtonCount = 0;
+
+            steamPlayerSummary steamPlayerSummaryForm = new steamPlayerSummary(steamUser.response.players[0], steamUserBans.players[0], steamUserFriends.friendslist, steamUserFriendsSummary, backButtonCount);
             steamPlayerSummaryForm.Show();
             
         }

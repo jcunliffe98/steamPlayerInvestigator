@@ -14,9 +14,11 @@ namespace steamPlayerInvestigator
 {
     public partial class steamPlayerSummary : Form
     {
-        public steamPlayerSummary(Player pSteamUser, PlayerBans pSteamUserBans, FriendsList pSteamUserFriends, List<SummaryRoot> pSteamFriendsSummary)
+        public steamPlayerSummary(Player pSteamUser, PlayerBans pSteamUserBans, FriendsList pSteamUserFriends, List<SummaryRoot> pSteamFriendsSummary, int backButtonCount)
         {
             InitializeComponent();
+
+            
 
             steamIdLabel.Text = "Steam ID:  " + pSteamUser.steamid;
             communityVisibilityStateLabel.Text = "Community Visibility State: " + pSteamUser.communityvisibilitystate;
@@ -106,6 +108,15 @@ namespace steamPlayerInvestigator
                 {
                     friendsListBox.Items.Add(pSteamFriendsSummary[i].response.players[o].personaname);
                 }
+            }
+
+            if(backButtonCount == 0)
+            {
+                backFriendButton.Enabled = false;
+            }
+            else
+            {
+                backFriendButton.Enabled = true;
             }
         }
 

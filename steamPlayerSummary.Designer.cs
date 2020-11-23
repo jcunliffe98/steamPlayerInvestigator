@@ -51,6 +51,8 @@
             this.economyBanLabel = new System.Windows.Forms.Label();
             this.friendsListBox = new System.Windows.Forms.ListBox();
             this.friendsListLabel = new System.Windows.Forms.Label();
+            this.selectFriendButton = new System.Windows.Forms.Button();
+            this.backFriendButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // steamIdLabel
@@ -287,11 +289,31 @@
             this.friendsListLabel.TabIndex = 22;
             this.friendsListLabel.Text = "Friends List";
             // 
+            // selectFriendButton
+            // 
+            this.selectFriendButton.Location = new System.Drawing.Point(1063, 119);
+            this.selectFriendButton.Name = "selectFriendButton";
+            this.selectFriendButton.Size = new System.Drawing.Size(138, 30);
+            this.selectFriendButton.TabIndex = 23;
+            this.selectFriendButton.Text = "Select";
+            this.selectFriendButton.UseVisualStyleBackColor = true;
+            // 
+            // backFriendButton
+            // 
+            this.backFriendButton.Location = new System.Drawing.Point(1063, 155);
+            this.backFriendButton.Name = "backFriendButton";
+            this.backFriendButton.Size = new System.Drawing.Size(138, 30);
+            this.backFriendButton.TabIndex = 24;
+            this.backFriendButton.Text = "Back";
+            this.backFriendButton.UseVisualStyleBackColor = true;
+            // 
             // steamPlayerSummary
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1213, 569);
+            this.Controls.Add(this.backFriendButton);
+            this.Controls.Add(this.selectFriendButton);
             this.Controls.Add(this.friendsListLabel);
             this.Controls.Add(this.friendsListBox);
             this.Controls.Add(this.economyBanLabel);
@@ -347,5 +369,7 @@
         private System.Windows.Forms.Label economyBanLabel;
         private System.Windows.Forms.ListBox friendsListBox;
         private System.Windows.Forms.Label friendsListLabel;
+        private System.Windows.Forms.Button selectFriendButton;
+        private System.Windows.Forms.Button backFriendButton;
     }
 }
