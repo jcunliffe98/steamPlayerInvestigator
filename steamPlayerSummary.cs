@@ -118,6 +118,8 @@ namespace steamPlayerInvestigator
             {
                 backFriendButton.Enabled = true;
             }
+
+            selectFriendButton.Click += new EventHandler((sender, EventArgs) => selectFriendButton_Click(sender, EventArgs, backButtonCount, pSteamFriendsSummary));
         }
 
         static public DateTime UnixTimeToDateTime(long unixtime)
@@ -125,6 +127,11 @@ namespace steamPlayerInvestigator
             DateTime newDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             newDateTime = newDateTime.AddSeconds(unixtime).ToLocalTime();
             return newDateTime;
+        }
+
+        private void selectFriendButton_Click(object sender, EventArgs e, int backButtonCount, List<SummaryRoot> pSteamFriendsSummary)
+        {
+            MessageBox.Show(pSteamFriendsSummary[0].response.players[0].personaname);
         }
     }
 }
