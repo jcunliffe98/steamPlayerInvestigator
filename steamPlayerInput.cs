@@ -55,6 +55,11 @@ namespace steamPlayerInvestigator
                     return;
                 }
             }
+            else if (pInputSteamId.Contains("https://steamcommunity.com/profiles/"))
+            {
+                string[] steamUrlSplit = pInputSteamId.Split('/');
+                pInputSteamId = steamUrlSplit[4];
+            }
 
             string url = "/ISteamUser/GetPlayerSummaries/v2/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=" + pInputSteamId;
             HttpResponseMessage response = await client.GetAsync(url);
@@ -83,7 +88,6 @@ namespace steamPlayerInvestigator
 
             url = "/ISteamUser/GetFriendList/v1/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamid=" + pInputSteamId;
             response = await client.GetAsync(url);
-            response.EnsureSuccessStatusCode();
             string respFriends = await response.Content.ReadAsStringAsync();
             FriendsRoot steamUserFriends = JsonConvert.DeserializeObject<FriendsRoot>(respFriends);
 
@@ -127,9 +131,9 @@ namespace steamPlayerInvestigator
                 }
             }
 
-            int backButtonCount = 0;
+            int currentSummaryCount = 0;
 
-            steamPlayerSummary steamPlayerSummaryForm = new steamPlayerSummary(steamUser.response.players[0], steamUserBans.players[0], steamUserFriends.friendslist, steamUserFriendsSummary, backButtonCount);
+            steamPlayerSummary steamPlayerSummaryForm = new steamPlayerSummary(steamUser.response.players[0], steamUserBans.players[0], steamUserFriends.friendslist, steamUserFriendsSummary, currentSummaryCount);
             steamPlayerSummaryForm.Show();
             
         }

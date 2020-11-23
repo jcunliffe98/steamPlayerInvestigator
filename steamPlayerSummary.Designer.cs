@@ -52,7 +52,6 @@
             this.friendsListBox = new System.Windows.Forms.ListBox();
             this.friendsListLabel = new System.Windows.Forms.Label();
             this.selectFriendButton = new System.Windows.Forms.Button();
-            this.backFriendButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // steamIdLabel
@@ -298,21 +297,11 @@
             this.selectFriendButton.Text = "Select";
             this.selectFriendButton.UseVisualStyleBackColor = true;
             // 
-            // backFriendButton
-            // 
-            this.backFriendButton.Location = new System.Drawing.Point(1063, 155);
-            this.backFriendButton.Name = "backFriendButton";
-            this.backFriendButton.Size = new System.Drawing.Size(138, 30);
-            this.backFriendButton.TabIndex = 24;
-            this.backFriendButton.Text = "Back";
-            this.backFriendButton.UseVisualStyleBackColor = true;
-            // 
             // steamPlayerSummary
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1213, 569);
-            this.Controls.Add(this.backFriendButton);
             this.Controls.Add(this.selectFriendButton);
             this.Controls.Add(this.friendsListLabel);
             this.Controls.Add(this.friendsListBox);
@@ -370,6 +359,5 @@
         private System.Windows.Forms.ListBox friendsListBox;
         private System.Windows.Forms.Label friendsListLabel;
         private System.Windows.Forms.Button selectFriendButton;
-        private System.Windows.Forms.Button backFriendButton;
     }
 }
