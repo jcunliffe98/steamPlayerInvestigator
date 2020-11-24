@@ -212,7 +212,7 @@
             // 
             this.communityBannedLabel.AutoSize = true;
             this.communityBannedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.communityBannedLabel.Location = new System.Drawing.Point(388, 119);
+            this.communityBannedLabel.Location = new System.Drawing.Point(456, 119);
             this.communityBannedLabel.Name = "communityBannedLabel";
             this.communityBannedLabel.Size = new System.Drawing.Size(127, 16);
             this.communityBannedLabel.TabIndex = 15;
@@ -222,7 +222,7 @@
             // 
             this.vacBannedLabel.AutoSize = true;
             this.vacBannedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vacBannedLabel.Location = new System.Drawing.Point(388, 148);
+            this.vacBannedLabel.Location = new System.Drawing.Point(456, 148);
             this.vacBannedLabel.Name = "vacBannedLabel";
             this.vacBannedLabel.Size = new System.Drawing.Size(85, 16);
             this.vacBannedLabel.TabIndex = 16;
@@ -232,7 +232,7 @@
             // 
             this.numberOfVacBansLabel.AutoSize = true;
             this.numberOfVacBansLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numberOfVacBansLabel.Location = new System.Drawing.Point(388, 177);
+            this.numberOfVacBansLabel.Location = new System.Drawing.Point(456, 177);
             this.numberOfVacBansLabel.Name = "numberOfVacBansLabel";
             this.numberOfVacBansLabel.Size = new System.Drawing.Size(139, 16);
             this.numberOfVacBansLabel.TabIndex = 17;
@@ -242,7 +242,7 @@
             // 
             this.daysSinceLastBanLabel.AutoSize = true;
             this.daysSinceLastBanLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.daysSinceLastBanLabel.Location = new System.Drawing.Point(388, 206);
+            this.daysSinceLastBanLabel.Location = new System.Drawing.Point(456, 206);
             this.daysSinceLastBanLabel.Name = "daysSinceLastBanLabel";
             this.daysSinceLastBanLabel.Size = new System.Drawing.Size(135, 16);
             this.daysSinceLastBanLabel.TabIndex = 18;
@@ -252,7 +252,7 @@
             // 
             this.numberOfGameBansLabel.AutoSize = true;
             this.numberOfGameBansLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numberOfGameBansLabel.Location = new System.Drawing.Point(388, 235);
+            this.numberOfGameBansLabel.Location = new System.Drawing.Point(456, 235);
             this.numberOfGameBansLabel.Name = "numberOfGameBansLabel";
             this.numberOfGameBansLabel.Size = new System.Drawing.Size(149, 16);
             this.numberOfGameBansLabel.TabIndex = 19;
@@ -262,7 +262,7 @@
             // 
             this.economyBanLabel.AutoSize = true;
             this.economyBanLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.economyBanLabel.Location = new System.Drawing.Point(388, 264);
+            this.economyBanLabel.Location = new System.Drawing.Point(456, 264);
             this.economyBanLabel.Name = "economyBanLabel";
             this.economyBanLabel.Size = new System.Drawing.Size(118, 16);
             this.economyBanLabel.TabIndex = 20;
