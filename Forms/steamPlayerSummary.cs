@@ -19,8 +19,6 @@ namespace steamPlayerInvestigator
         {
             InitializeComponent();
 
-            
-
             steamIdLabel.Text = "Steam ID:  " + pSteamUser.steamid;
             communityVisibilityStateLabel.Text = "Community Visibility State: " + pSteamUser.communityvisibilitystate;
             profileStateLabel.Text = "Profile State: " + pSteamUser.profilestate;

@@ -60,10 +60,10 @@
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Classes\PlayerBans.cs" />
     <Compile Include="Classes\PlayerBansRoot.cs" />
-    <Compile Include="steamPlayerInput.cs">
+    <Compile Include="Forms\steamPlayerInput.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="steamPlayerInput.Designer.cs">
+    <Compile Include="Forms\steamPlayerInput.Designer.cs">
       <DependentUpon>steamPlayerInput.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -72,10 +72,10 @@
     <Compile Include="Classes\SummaryRoot.cs" />
     <Compile Include="Classes\UrlResponse.cs" />
     <Compile Include="Classes\UrlRoot.cs" />
-    <Compile Include="steamPlayerSummary.cs">
+    <Compile Include="Forms\steamPlayerSummary.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="steamPlayerSummary.Designer.cs">
+    <Compile Include="Forms\steamPlayerSummary.Designer.cs">
       <DependentUpon>steamPlayerSummary.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -87,10 +87,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="steamPlayerInput.resx">
+    <EmbeddedResource Include="Forms\steamPlayerInput.resx">
       <DependentUpon>steamPlayerInput.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="steamPlayerSummary.resx">
+    <EmbeddedResource Include="Forms\steamPlayerSummary.resx">
       <DependentUpon>steamPlayerSummary.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
