@@ -30,7 +30,14 @@ namespace steamPlayerInvestigator
             avatarMediumLabel.Text = "Avatar Medium: " + pSteamUser.avatarmedium;
             avatarFullLabel.Text = "Avatar Full: " + pSteamUser.avatarfull;
             avatarHashLabel.Text = "Avatar Hash: " + pSteamUser.avatarhash;
-            lastLogoffLabel.Text = "Last Logoff: " + UnixTimeToDateTime(pSteamUser.lastlogoff);
+            if (pSteamUser.lastlogoff == 0)
+            {
+                lastLogoffLabel.Text = "Last Logoff: Unknown";
+            }
+            else
+            {
+                lastLogoffLabel.Text = "Last Logoff: " + UnixTimeToDateTime(pSteamUser.lastlogoff);
+            }
             personaStateLabel.Text = "Persona State: " + pSteamUser.personastate;
             primaryClanIdLabel.Text = "Primary Clan ID: " + pSteamUser.primaryclanid;
             timeCreatedLabel.Text = "Time Created: " + UnixTimeToDateTime(pSteamUser.timecreated);
