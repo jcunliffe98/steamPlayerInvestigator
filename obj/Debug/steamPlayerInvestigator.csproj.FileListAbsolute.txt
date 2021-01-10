@@ -14,3 +14,4 @@ C:\3rd Year Project\Steam Investigator\steamPlayerInvestigator\steamPlayerInvest
 C:\3rd Year Project\Steam Investigator\steamPlayerInvestigator\steamPlayerInvestigator\bin\Debug\System.Net.Http.Formatting.xml
 C:\3rd Year Project\Steam Investigator\steamPlayerInvestigator\steamPlayerInvestigator\obj\Debug\steamPlayerInvestigator.csproj.CopyComplete
 C:\3rd Year Project\Steam Investigator\steamPlayerInvestigator\steamPlayerInvestigator\obj\Debug\steamPlayerInvestigator.steamPlayerSummary.resources
+C:\3rd Year Project\Steam Investigator\steamPlayerInvestigator\steamPlayerInvestigator\obj\Debug\steamPlayerInvestigator.Forms.steamAutomaticInvestigation.resources

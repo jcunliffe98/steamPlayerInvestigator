@@ -60,6 +60,12 @@
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Classes\PlayerBans.cs" />
     <Compile Include="Classes\PlayerBansRoot.cs" />
+    <Compile Include="Forms\steamAutomaticInvestigation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\steamAutomaticInvestigation.Designer.cs">
+      <DependentUpon>steamAutomaticInvestigation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\steamPlayerInput.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +84,9 @@
     <Compile Include="Forms\steamPlayerSummary.Designer.cs">
       <DependentUpon>steamPlayerSummary.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\steamAutomaticInvestigation.resx">
+      <DependentUpon>steamAutomaticInvestigation.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
+using steamPlayerInvestigator.Forms;
 
 namespace steamPlayerInvestigator
 {
@@ -20,13 +21,14 @@ namespace steamPlayerInvestigator
             InitializeComponent();
         }
 
-        private async void inputButton_ClickAsync(object sender, EventArgs e)
+        private async void manualConfirmButton_ClickAsync(object sender, EventArgs e)
         {
-            await getSteamInputAsync();
+            string button = "manual";
+            await getSteamInputAsync(button);
         }
 
 
-        private async Task getSteamPlayerSummary(string pInputSteamId)
+        private async Task getSteamPlayerSummary(string pInputSteamId, string button)
         {
             using var client = new HttpClient();
 
@@ -143,14 +145,28 @@ namespace steamPlayerInvestigator
 
             int currentSummaryCount = 0;
 
-            steamPlayerSummary steamPlayerSummaryForm = new steamPlayerSummary(steamUser.response.players[0], steamUserBans.players[0], steamUserFriends.friendslist, steamUserFriendsSummary, currentSummaryCount);
-            steamPlayerSummaryForm.Show();
+            if(button == "manual")
+            {
+                steamPlayerSummary steamPlayerSummaryForm = new steamPlayerSummary(steamUser.response.players[0], steamUserBans.players[0], steamUserFriends.friendslist, steamUserFriendsSummary, currentSummaryCount);
+                steamPlayerSummaryForm.Show();
+            }
+            else if(button == "automatic")
+            {
+                steamAutomaticInvestigation steamAutomaticInvestigationForm = new steamAutomaticInvestigation(steamUser.response.players[0], steamUserBans.players[0], steamUserFriends.friendslist, steamUserFriendsSummary, currentSummaryCount);
+                steamAutomaticInvestigationForm.Show();
+            }
         }
 
-        private async Task getSteamInputAsync()
+        private async Task getSteamInputAsync(string button)
         {
             string inputSteamId = inputTextBox.Text;
-            await getSteamPlayerSummary(inputSteamId);
+            await getSteamPlayerSummary(inputSteamId, button);
+        }
+
+        private async void automaticConfirmButton_ClickAsync(object sender, EventArgs e)
+        {
+            string button = "automatic";
+            await getSteamInputAsync(button);
         }
     }
 }
