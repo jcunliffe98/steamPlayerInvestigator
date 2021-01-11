@@ -11,5 +11,7 @@ namespace steamPlayerInvestigator
         public string steamid { get; set; }
         public string relationship { get; set; }
         public int friend_since { get; set; }
+
+        public FriendsRoot friendsOfFriends { get; set; }
     }
 }
