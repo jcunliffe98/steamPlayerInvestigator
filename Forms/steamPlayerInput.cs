@@ -239,7 +239,7 @@ namespace steamPlayerInvestigator
 
                 if (steamUserFriends.friendslist.friends.Count <= 100)
                 {
-                    url = "/ISteamUser/GetPlayerSummaries/v2/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=";
+                    url = "/ISteamUser/GetPlayerSummaries/v1/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=";
 
                     for (int i = 0; i < steamUserFriends.friendslist.friends.Count; i++)
                     {
@@ -260,15 +260,18 @@ namespace steamPlayerInvestigator
                 else
                 {
                     int overallCount = 0;
+                    int count = 0;
 
                     for (int a = 0; a < noOfLoops; a++)
                     {
                         url = "/ISteamUser/GetPlayerSummaries/v2/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=";
+                        string urlBan = "/ISteamUser/GetPlayerBans/v1/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=";
 
                         for (int i = a * 100; i < (a + 1) * 100; i++)
                         {
                             overallCount++;
                             url += steamUserFriends.friendslist.friends[i].steamid + "?";
+                            urlBan += steamUserFriends.friendslist.friends[i].steamid + "?";
                             string urlFriend = "/ISteamUser/GetFriendList/v1/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamid=";
                             urlFriend += steamUserFriends.friendslist.friends[i].steamid;
                             response = await client.GetAsync(urlFriend);
@@ -277,7 +280,7 @@ namespace steamPlayerInvestigator
                                 continue;
                             }
                             string respFriendsOfFriends = await response.Content.ReadAsStringAsync();
-                            FriendsRoot friends = steamUserFriends.friendslist.friends[i].friendsOfFriends;
+                            FriendsRoot friends;
                             friends = JsonConvert.DeserializeObject<FriendsRoot>(respFriendsOfFriends);
                             steamUserFriends.friendslist.friends[i].friendsOfFriends = friends;
                             if (overallCount == steamUserFriends.friendslist.friends.Count)
@@ -290,6 +293,28 @@ namespace steamPlayerInvestigator
                         response.EnsureSuccessStatusCode();
                         string respFriendsSummary = await response.Content.ReadAsStringAsync();
                         steamUserFriendsSummary.Add(JsonConvert.DeserializeObject<SummaryRoot>(respFriendsSummary));
+
+                        response = await client.GetAsync(urlBan);
+                        response.EnsureSuccessStatusCode();
+                        string respFriendsBan = await response.Content.ReadAsStringAsync();
+                        SummaryResponse responseBans = (JsonConvert.DeserializeObject<SummaryResponse>(respFriendsBan));
+                        for (int i = 0; i < steamUserFriendsSummary[count].response.players.Count; i++)
+                        {
+                            for (int b = 0; b < steamUserFriendsSummary[count].response.players.Count; b++)
+                            {
+                                if(steamUserFriendsSummary[count].response.players[i].steamid == responseBans.players[b].steamid)
+                                {
+                                    steamUserFriendsSummary[count].response.players[i].CommunityBanned = responseBans.players[b].CommunityBanned;
+                                    steamUserFriendsSummary[count].response.players[i].VACBanned = responseBans.players[b].VACBanned;
+                                    steamUserFriendsSummary[count].response.players[i].NumberOfVACBans = responseBans.players[b].NumberOfVACBans;
+                                    steamUserFriendsSummary[count].response.players[i].DaysSinceLastBan = responseBans.players[b].DaysSinceLastBan;
+                                    steamUserFriendsSummary[count].response.players[i].NumberOfGameBans = responseBans.players[b].NumberOfGameBans;
+                                    steamUserFriendsSummary[count].response.players[i].EconomyBan = responseBans.players[b].EconomyBan;
+                                    break;
+                                }
+                            }
+                        }
+                        count++;
                     }
                 }
             }
@@ -298,9 +323,7 @@ namespace steamPlayerInvestigator
                 MessageBox.Show("Friends List can't be retrieved");
             }
 
-            int currentSummaryCount = 0;
-
-            steamAutomaticInvestigation steamAutomaticInvestigationForm = new steamAutomaticInvestigation(steamUser.response.players[0], steamUserBans.players[0], steamUserFriends.friendslist, steamUserFriendsSummary, currentSummaryCount);
+            steamAutomaticInvestigation steamAutomaticInvestigationForm = new steamAutomaticInvestigation(steamUser.response.players[0], steamUserBans.players[0], steamUserFriends.friendslist, steamUserFriendsSummary);
             steamAutomaticInvestigationForm.Show();
         }
 

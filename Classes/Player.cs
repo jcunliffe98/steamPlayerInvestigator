@@ -23,5 +23,14 @@ namespace steamPlayerInvestigator
         public long timecreated { get; set; }
         public int personastateflags { get; set; }
         public string loccountrycode { get; set; }
+        public bool CommunityBanned { get; set; }
+        public bool VACBanned { get; set; }
+        public int NumberOfVACBans { get; set; }
+        public int DaysSinceLastBan { get; set; }
+        public int NumberOfGameBans { get; set; }
+        public string EconomyBan { get; set; }
+        public string relationship { get; set; }
+        public int friend_since { get; set; }
+        public FriendsRoot friendsOfFriends { get; set; }
     }
 }

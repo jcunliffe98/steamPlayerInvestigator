@@ -15,7 +15,7 @@ namespace steamPlayerInvestigator.Forms
 {
     public partial class steamAutomaticInvestigation : Form
     {
-        public steamAutomaticInvestigation(Player pSteamUser, PlayerBans pSteamUserBans, FriendsList pSteamUserFriends, List<SummaryRoot> pSteamFriendsSummary, int currentSummaryCount)
+        public steamAutomaticInvestigation(Player pSteamUser, PlayerBans pSteamUserBans, FriendsList pSteamUserFriends, List<SummaryRoot> pSteamFriendsSummary)
         {
             InitializeComponent();
         }
