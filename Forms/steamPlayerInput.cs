@@ -239,7 +239,7 @@ namespace steamPlayerInvestigator
 
                 if (steamUserFriends.friendslist.friends.Count <= 100)
                 {
-                    url = "/ISteamUser/GetPlayerSummaries/v1/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=";
+                    url = "/ISteamUser/GetPlayerSummaries/v2/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=";
 
                     for (int i = 0; i < steamUserFriends.friendslist.friends.Count; i++)
                     {
@@ -302,7 +302,7 @@ namespace steamPlayerInvestigator
                         {
                             for (int b = 0; b < steamUserFriendsSummary[count].response.players.Count; b++)
                             {
-                                if(steamUserFriendsSummary[count].response.players[i].steamid == responseBans.players[b].steamid)
+                                if (steamUserFriendsSummary[count].response.players[i].steamid == responseBans.players[b].steamid)
                                 {
                                     steamUserFriendsSummary[count].response.players[i].CommunityBanned = responseBans.players[b].CommunityBanned;
                                     steamUserFriendsSummary[count].response.players[i].VACBanned = responseBans.players[b].VACBanned;
@@ -313,14 +313,32 @@ namespace steamPlayerInvestigator
                                     break;
                                 }
                             }
+                            for (int b = 0; b < steamUserFriends.friendslist.friends.Count; b++)
+                            {
+                                if (steamUserFriendsSummary[count].response.players[i].steamid == steamUserFriends.friendslist.friends[b].steamid)
+                                {
+                                    steamUserFriendsSummary[count].response.players[i].friend_since = steamUserFriends.friendslist.friends[b].friend_since;
+                                    steamUserFriendsSummary[count].response.players[i].relationship = steamUserFriends.friendslist.friends[b].relationship;
+                                    steamUserFriendsSummary[count].response.players[i].friendsOfFriends = steamUserFriends.friendslist.friends[b].friendsOfFriends;
+                                }
+                            }
                         }
-                        count++;
+                            count++;
                     }
                 }
             }
             else
             {
                 MessageBox.Show("Friends List can't be retrieved");
+            }
+
+            SummaryRoot summaryFriends = steamUserFriendsSummary[0];
+            for(int a = 1; a < steamUserFriendsSummary.Count; a++)
+            {
+                for(int b = 0; b < steamUserFriendsSummary[a].response.players.Count; b++)
+                {
+                    summaryFriends.response.players.Add(steamUserFriendsSummary[a].response.players[b]);
+                }
             }
 
             steamAutomaticInvestigation steamAutomaticInvestigationForm = new steamAutomaticInvestigation(steamUser.response.players[0], steamUserBans.players[0], steamUserFriends.friendslist, steamUserFriendsSummary);
