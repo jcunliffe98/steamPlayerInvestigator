@@ -377,13 +377,29 @@ namespace steamPlayerInvestigator
 
             for(int a = 0; a < summaryFriends.response.players.Count; a++)
             {
-                if(summaryFriends.response.players[a].friendsOfFriends == null)
+                url = "/ISteamUser/GetPlayerSummaries/v2/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=";
+                string urlBan = "/ISteamUser/GetPlayerBans/v1/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=";
+                int loopCount = 0;
+                SummaryRoot tempSummary = new SummaryRoot();
+                PlayerBansRoot tempBans = new PlayerBansRoot();
+
+                if (summaryFriends.response.players[a].friendsOfFriends == null)
                 {
                     continue;
                 }
                 for(int b = 0; b < summaryFriends.response.players[a].friendsOfFriends.friendslist.friends.Count; b++)
                 {
+                    url += summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[b].steamid + "?";
+                    urlBan += summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[b].steamid + "?";
+                    loopCount++;
 
+                    if(loopCount == 100)
+                    {
+                        response = await client.GetAsync(url);
+                        response.EnsureSuccessStatusCode();
+                        string respFriendsSummary = await response.Content.ReadAsStringAsync();
+                        tempSummary = JsonConvert.DeserializeObject<SummaryRoot>(respFriendsSummary);
+                    }
                 }
             }
 
