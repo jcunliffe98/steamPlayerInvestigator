@@ -240,10 +240,13 @@ namespace steamPlayerInvestigator
                 if (steamUserFriends.friendslist.friends.Count <= 100)
                 {
                     url = "/ISteamUser/GetPlayerSummaries/v2/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=";
+                    string urlBan = "/ISteamUser/GetPlayerBans/v1/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=";
 
                     for (int i = 0; i < steamUserFriends.friendslist.friends.Count; i++)
                     {
                         url += steamUserFriends.friendslist.friends[i].steamid + "?";
+                        urlBan += steamUserFriends.friendslist.friends[i].steamid + "?";
+
                         string urlFriend = "/ISteamUser/GetFriendList/v1/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamid=";
                         urlFriend += steamUserFriends.friendslist.friends[i].steamid;
                         response = await client.GetAsync(urlFriend);
@@ -256,6 +259,37 @@ namespace steamPlayerInvestigator
                     response.EnsureSuccessStatusCode();
                     string respFriendsSummary = await response.Content.ReadAsStringAsync();
                     steamUserFriendsSummary.Add(JsonConvert.DeserializeObject<SummaryRoot>(respFriendsSummary));
+
+                    response = await client.GetAsync(urlBan);
+                    response.EnsureSuccessStatusCode();
+                    string respFriendsBan = await response.Content.ReadAsStringAsync();
+                    SummaryResponse responseBans = (JsonConvert.DeserializeObject<SummaryResponse>(respFriendsBan));
+
+                    for (int i = 0; i < steamUserFriendsSummary[0].response.players.Count; i++)
+                    {
+                        for (int b = 0; b < steamUserFriendsSummary[0].response.players.Count; b++)
+                        {
+                            if (steamUserFriendsSummary[0].response.players[i].steamid == responseBans.players[b].steamid)
+                            {
+                                steamUserFriendsSummary[0].response.players[i].CommunityBanned = responseBans.players[b].CommunityBanned;
+                                steamUserFriendsSummary[0].response.players[i].VACBanned = responseBans.players[b].VACBanned;
+                                steamUserFriendsSummary[0].response.players[i].NumberOfVACBans = responseBans.players[b].NumberOfVACBans;
+                                steamUserFriendsSummary[0].response.players[i].DaysSinceLastBan = responseBans.players[b].DaysSinceLastBan;
+                                steamUserFriendsSummary[0].response.players[i].NumberOfGameBans = responseBans.players[b].NumberOfGameBans;
+                                steamUserFriendsSummary[0].response.players[i].EconomyBan = responseBans.players[b].EconomyBan;
+                                break;
+                            }
+                        }
+                        for (int b = 0; b < steamUserFriends.friendslist.friends.Count; b++)
+                        {
+                            if (steamUserFriendsSummary[0].response.players[i].steamid == steamUserFriends.friendslist.friends[b].steamid)
+                            {
+                                steamUserFriendsSummary[0].response.players[i].friend_since = steamUserFriends.friendslist.friends[b].friend_since;
+                                steamUserFriendsSummary[0].response.players[i].relationship = steamUserFriends.friendslist.friends[b].relationship;
+                                steamUserFriendsSummary[0].response.players[i].friendsOfFriends = steamUserFriends.friendslist.friends[b].friendsOfFriends;
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -338,6 +372,18 @@ namespace steamPlayerInvestigator
                 for(int b = 0; b < steamUserFriendsSummary[a].response.players.Count; b++)
                 {
                     summaryFriends.response.players.Add(steamUserFriendsSummary[a].response.players[b]);
+                }
+            }
+
+            for(int a = 0; a < summaryFriends.response.players.Count; a++)
+            {
+                if(summaryFriends.response.players[a].friendsOfFriends == null)
+                {
+                    continue;
+                }
+                for(int b = 0; b < summaryFriends.response.players[a].friendsOfFriends.friendslist.friends.Count; b++)
+                {
+
                 }
             }
 
