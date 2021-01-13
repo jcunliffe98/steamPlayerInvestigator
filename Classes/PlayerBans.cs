@@ -14,5 +14,6 @@ namespace steamPlayerInvestigator
         public int DaysSinceLastBan { get; set; }
         public int NumberOfGameBans { get; set; }
         public string EconomyBan { get; set; }
+        public string SteamId { get; set; }
     }
 }

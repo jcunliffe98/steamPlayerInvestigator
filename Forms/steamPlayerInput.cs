@@ -383,7 +383,7 @@ namespace steamPlayerInvestigator
                 SummaryRoot tempSummary = new SummaryRoot();
                 PlayerBansRoot tempBans = new PlayerBansRoot();
 
-                if (summaryFriends.response.players[a].friendsOfFriends == null)
+                if (summaryFriends.response.players[a].friendsOfFriends == null || summaryFriends.response.players[a].friendsOfFriends.friendslist == null)
                 {
                     continue;
                 }
@@ -399,11 +399,112 @@ namespace steamPlayerInvestigator
                         response.EnsureSuccessStatusCode();
                         string respFriendsSummary = await response.Content.ReadAsStringAsync();
                         tempSummary = JsonConvert.DeserializeObject<SummaryRoot>(respFriendsSummary);
+
+                        response = await client.GetAsync(urlBan);
+                        response.EnsureSuccessStatusCode();
+                        string respFriendsBan = await response.Content.ReadAsStringAsync();
+                        tempBans = (JsonConvert.DeserializeObject<PlayerBansRoot>(respFriendsBan));
+
+                        urlBan = "/ISteamUser/GetPlayerBans/v1/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=";
+                        url = "/ISteamUser/GetPlayerSummaries/v2/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=";
+
+                        for (int z = 0; z < tempSummary.response.players.Count; z++)
+                        {
+                            for(int y = 0; y < summaryFriends.response.players[a].friendsOfFriends.friendslist.friends.Count; y++)
+                            {
+                                if(tempSummary.response.players[z].steamid == summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].steamid)
+                                {
+                                    summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].communityvisibilitystate = tempSummary.response.players[z].communityvisibilitystate;
+                                    summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].profilestate = tempSummary.response.players[z].profilestate;
+                                    summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].personaname = tempSummary.response.players[z].personaname;
+                                    summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].profileurl = tempSummary.response.players[z].profileurl;
+                                    summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].avatar = tempSummary.response.players[z].avatar;
+                                    summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].avatarmedium = tempSummary.response.players[z].avatarmedium;
+                                    summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].avatarfull = tempSummary.response.players[z].avatarfull;
+                                    summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].avatarhash = tempSummary.response.players[z].avatarhash;
+                                    summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].lastlogoff = tempSummary.response.players[z].lastlogoff;
+                                    summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].personastate = tempSummary.response.players[z].personastate;
+                                    summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].primaryclanid = tempSummary.response.players[z].primaryclanid;
+                                    summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].timecreated = tempSummary.response.players[z].timecreated;
+                                    summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].personastateflags = tempSummary.response.players[z].personastateflags;
+                                    summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].loccountrycode = tempSummary.response.players[z].loccountrycode;
+                                }
+                            }
+                        }
+                        for (int z = 0; z < tempBans.players.Count; z++)
+                        {
+                            for(int y = 0; y < summaryFriends.response.players[a].friendsOfFriends.friendslist.friends.Count; y++)
+                            {
+                                if (tempBans.players[z].SteamId == summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].steamid)
+                                {
+                                    summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].CommunityBanned = tempBans.players[z].CommunityBanned;
+                                    summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].VACBanned = tempBans.players[z].VACBanned;
+                                    summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].NumberOfVACBans = tempBans.players[z].NumberOfVACBans;
+                                    summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].DaysSinceLastBan = tempBans.players[z].DaysSinceLastBan;
+                                    summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].NumberOfGameBans = tempBans.players[z].NumberOfGameBans;
+                                    summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].EconomyBan = tempBans.players[z].EconomyBan;
+                                }
+                            }
+                        }
+                        loopCount = 0;
+                    }
+                }
+                if(loopCount != 0)
+                {
+                    response = await client.GetAsync(url);
+                    response.EnsureSuccessStatusCode();
+                    string respFriendsSummary = await response.Content.ReadAsStringAsync();
+                    tempSummary = JsonConvert.DeserializeObject<SummaryRoot>(respFriendsSummary);
+                    url = "/ISteamUser/GetPlayerSummaries/v2/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=";
+
+                    response = await client.GetAsync(urlBan);
+                    response.EnsureSuccessStatusCode();
+                    string respFriendsBan = await response.Content.ReadAsStringAsync();
+                    tempBans = (JsonConvert.DeserializeObject<PlayerBansRoot>(respFriendsBan));
+                    urlBan = "/ISteamUser/GetPlayerBans/v1/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=";
+
+                    for (int z = 0; z < tempSummary.response.players.Count; z++)
+                    {
+                        for (int y = 0; y < summaryFriends.response.players[a].friendsOfFriends.friendslist.friends.Count; y++)
+                        {
+                            if (tempSummary.response.players[z].steamid == summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].steamid)
+                            {
+                                summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].communityvisibilitystate = tempSummary.response.players[z].communityvisibilitystate;
+                                summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].profilestate = tempSummary.response.players[z].profilestate;
+                                summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].personaname = tempSummary.response.players[z].personaname;
+                                summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].profileurl = tempSummary.response.players[z].profileurl;
+                                summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].avatar = tempSummary.response.players[z].avatar;
+                                summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].avatarmedium = tempSummary.response.players[z].avatarmedium;
+                                summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].avatarfull = tempSummary.response.players[z].avatarfull;
+                                summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].avatarhash = tempSummary.response.players[z].avatarhash;
+                                summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].lastlogoff = tempSummary.response.players[z].lastlogoff;
+                                summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].personastate = tempSummary.response.players[z].personastate;
+                                summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].primaryclanid = tempSummary.response.players[z].primaryclanid;
+                                summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].timecreated = tempSummary.response.players[z].timecreated;
+                                summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].personastateflags = tempSummary.response.players[z].personastateflags;
+                                summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].loccountrycode = tempSummary.response.players[z].loccountrycode;
+                            }
+                        }
+                    }
+                    for (int z = 0; z < tempBans.players.Count; z++)
+                    {
+                        for (int y = 0; y < summaryFriends.response.players[a].friendsOfFriends.friendslist.friends.Count; y++)
+                        {
+                            if (tempBans.players[z].SteamId == summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].steamid)
+                            {
+                                summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].CommunityBanned = tempBans.players[z].CommunityBanned;
+                                summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].VACBanned = tempBans.players[z].VACBanned;
+                                summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].NumberOfVACBans = tempBans.players[z].NumberOfVACBans;
+                                summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].DaysSinceLastBan = tempBans.players[z].DaysSinceLastBan;
+                                summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].NumberOfGameBans = tempBans.players[z].NumberOfGameBans;
+                                summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].EconomyBan = tempBans.players[z].EconomyBan;
+                            }
+                        }
                     }
                 }
             }
 
-            steamAutomaticInvestigation steamAutomaticInvestigationForm = new steamAutomaticInvestigation(steamUser.response.players[0], steamUserBans.players[0], steamUserFriends.friendslist, steamUserFriendsSummary);
+            steamAutomaticInvestigation steamAutomaticInvestigationForm = new steamAutomaticInvestigation(steamUser.response.players[0], steamUserBans.players[0], steamUserFriends.friendslist, summaryFriends);
             steamAutomaticInvestigationForm.Show();
         }
 
