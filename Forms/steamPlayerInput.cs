@@ -504,7 +504,7 @@ namespace steamPlayerInvestigator
                 }
             }
 
-            steamAutomaticInvestigation steamAutomaticInvestigationForm = new steamAutomaticInvestigation(steamUser.response.players[0], steamUserBans.players[0], steamUserFriends.friendslist, summaryFriends);
+            steamAutomaticInvestigation steamAutomaticInvestigationForm = new steamAutomaticInvestigation(steamUser.response.players[0], steamUserBans.players[0], summaryFriends);
             steamAutomaticInvestigationForm.Show();
         }
 
