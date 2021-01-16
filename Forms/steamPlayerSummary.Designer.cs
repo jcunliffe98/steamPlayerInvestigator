@@ -34,9 +34,6 @@
             this.personaNameLabel = new System.Windows.Forms.Label();
             this.profileUrlLabel = new System.Windows.Forms.Label();
             this.avatarLabel = new System.Windows.Forms.Label();
-            this.avatarMediumLabel = new System.Windows.Forms.Label();
-            this.avatarFullLabel = new System.Windows.Forms.Label();
-            this.avatarHashLabel = new System.Windows.Forms.Label();
             this.lastLogoffLabel = new System.Windows.Forms.Label();
             this.personaStateLabel = new System.Windows.Forms.Label();
             this.primaryClanIdLabel = new System.Windows.Forms.Label();
@@ -52,13 +49,16 @@
             this.friendsListBox = new System.Windows.Forms.ListBox();
             this.friendsListLabel = new System.Windows.Forms.Label();
             this.selectFriendButton = new System.Windows.Forms.Button();
+            this.profileUrlLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.steamAvatarPictureBox = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.steamAvatarPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // steamIdLabel
             // 
             this.steamIdLabel.AutoSize = true;
             this.steamIdLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.steamIdLabel.Location = new System.Drawing.Point(12, 119);
+            this.steamIdLabel.Location = new System.Drawing.Point(12, 194);
             this.steamIdLabel.Name = "steamIdLabel";
             this.steamIdLabel.Size = new System.Drawing.Size(66, 16);
             this.steamIdLabel.TabIndex = 0;
@@ -68,7 +68,7 @@
             // 
             this.communityVisibilityStateLabel.AutoSize = true;
             this.communityVisibilityStateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.communityVisibilityStateLabel.Location = new System.Drawing.Point(12, 148);
+            this.communityVisibilityStateLabel.Location = new System.Drawing.Point(12, 228);
             this.communityVisibilityStateLabel.Name = "communityVisibilityStateLabel";
             this.communityVisibilityStateLabel.Size = new System.Drawing.Size(163, 16);
             this.communityVisibilityStateLabel.TabIndex = 1;
@@ -78,7 +78,7 @@
             // 
             this.profileStateLabel.AutoSize = true;
             this.profileStateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.profileStateLabel.Location = new System.Drawing.Point(12, 177);
+            this.profileStateLabel.Location = new System.Drawing.Point(12, 262);
             this.profileStateLabel.Name = "profileStateLabel";
             this.profileStateLabel.Size = new System.Drawing.Size(83, 16);
             this.profileStateLabel.TabIndex = 2;
@@ -88,7 +88,7 @@
             // 
             this.personaNameLabel.AutoSize = true;
             this.personaNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.personaNameLabel.Location = new System.Drawing.Point(12, 206);
+            this.personaNameLabel.Location = new System.Drawing.Point(12, 296);
             this.personaNameLabel.Name = "personaNameLabel";
             this.personaNameLabel.Size = new System.Drawing.Size(102, 16);
             this.personaNameLabel.TabIndex = 3;
@@ -98,7 +98,7 @@
             // 
             this.profileUrlLabel.AutoSize = true;
             this.profileUrlLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.profileUrlLabel.Location = new System.Drawing.Point(12, 235);
+            this.profileUrlLabel.Location = new System.Drawing.Point(12, 330);
             this.profileUrlLabel.Name = "profileUrlLabel";
             this.profileUrlLabel.Size = new System.Drawing.Size(69, 16);
             this.profileUrlLabel.TabIndex = 4;
@@ -108,47 +108,17 @@
             // 
             this.avatarLabel.AutoSize = true;
             this.avatarLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.avatarLabel.Location = new System.Drawing.Point(12, 438);
+            this.avatarLabel.Location = new System.Drawing.Point(12, 86);
             this.avatarLabel.Name = "avatarLabel";
             this.avatarLabel.Size = new System.Drawing.Size(50, 16);
             this.avatarLabel.TabIndex = 5;
             this.avatarLabel.Text = "Avatar:";
             // 
-            // avatarMediumLabel
-            // 
-            this.avatarMediumLabel.AutoSize = true;
-            this.avatarMediumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.avatarMediumLabel.Location = new System.Drawing.Point(12, 467);
-            this.avatarMediumLabel.Name = "avatarMediumLabel";
-            this.avatarMediumLabel.Size = new System.Drawing.Size(101, 16);
-            this.avatarMediumLabel.TabIndex = 6;
-            this.avatarMediumLabel.Text = "Avatar Medium:";
-            // 
-            // avatarFullLabel
-            // 
-            this.avatarFullLabel.AutoSize = true;
-            this.avatarFullLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.avatarFullLabel.Location = new System.Drawing.Point(12, 496);
-            this.avatarFullLabel.Name = "avatarFullLabel";
-            this.avatarFullLabel.Size = new System.Drawing.Size(74, 16);
-            this.avatarFullLabel.TabIndex = 7;
-            this.avatarFullLabel.Text = "Avatar Full:";
-            // 
-            // avatarHashLabel
-            // 
-            this.avatarHashLabel.AutoSize = true;
-            this.avatarHashLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.avatarHashLabel.Location = new System.Drawing.Point(12, 525);
-            this.avatarHashLabel.Name = "avatarHashLabel";
-            this.avatarHashLabel.Size = new System.Drawing.Size(85, 16);
-            this.avatarHashLabel.TabIndex = 8;
-            this.avatarHashLabel.Text = "Avatar Hash:";
-            // 
             // lastLogoffLabel
             // 
             this.lastLogoffLabel.AutoSize = true;
             this.lastLogoffLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lastLogoffLabel.Location = new System.Drawing.Point(12, 264);
+            this.lastLogoffLabel.Location = new System.Drawing.Point(12, 364);
             this.lastLogoffLabel.Name = "lastLogoffLabel";
             this.lastLogoffLabel.Size = new System.Drawing.Size(76, 16);
             this.lastLogoffLabel.TabIndex = 9;
@@ -158,7 +128,7 @@
             // 
             this.personaStateLabel.AutoSize = true;
             this.personaStateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.personaStateLabel.Location = new System.Drawing.Point(12, 293);
+            this.personaStateLabel.Location = new System.Drawing.Point(12, 398);
             this.personaStateLabel.Name = "personaStateLabel";
             this.personaStateLabel.Size = new System.Drawing.Size(96, 16);
             this.personaStateLabel.TabIndex = 10;
@@ -168,7 +138,7 @@
             // 
             this.primaryClanIdLabel.AutoSize = true;
             this.primaryClanIdLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.primaryClanIdLabel.Location = new System.Drawing.Point(12, 322);
+            this.primaryClanIdLabel.Location = new System.Drawing.Point(12, 432);
             this.primaryClanIdLabel.Name = "primaryClanIdLabel";
             this.primaryClanIdLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.primaryClanIdLabel.Size = new System.Drawing.Size(103, 16);
@@ -179,7 +149,7 @@
             // 
             this.timeCreatedLabel.AutoSize = true;
             this.timeCreatedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.timeCreatedLabel.Location = new System.Drawing.Point(12, 351);
+            this.timeCreatedLabel.Location = new System.Drawing.Point(12, 466);
             this.timeCreatedLabel.Name = "timeCreatedLabel";
             this.timeCreatedLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.timeCreatedLabel.Size = new System.Drawing.Size(93, 16);
@@ -190,7 +160,7 @@
             // 
             this.personaStateFlagsLabel.AutoSize = true;
             this.personaStateFlagsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.personaStateFlagsLabel.Location = new System.Drawing.Point(12, 380);
+            this.personaStateFlagsLabel.Location = new System.Drawing.Point(12, 500);
             this.personaStateFlagsLabel.Name = "personaStateFlagsLabel";
             this.personaStateFlagsLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.personaStateFlagsLabel.Size = new System.Drawing.Size(133, 16);
@@ -201,7 +171,7 @@
             // 
             this.locCountryCodeLabel.AutoSize = true;
             this.locCountryCodeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.locCountryCodeLabel.Location = new System.Drawing.Point(12, 409);
+            this.locCountryCodeLabel.Location = new System.Drawing.Point(12, 534);
             this.locCountryCodeLabel.Name = "locCountryCodeLabel";
             this.locCountryCodeLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.locCountryCodeLabel.Size = new System.Drawing.Size(92, 16);
@@ -297,11 +267,34 @@
             this.selectFriendButton.Text = "Select";
             this.selectFriendButton.UseVisualStyleBackColor = true;
             // 
+            // profileUrlLinkLabel
+            // 
+            this.profileUrlLinkLabel.AutoSize = true;
+            this.profileUrlLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
+            this.profileUrlLinkLabel.Location = new System.Drawing.Point(79, 330);
+            this.profileUrlLinkLabel.Name = "profileUrlLinkLabel";
+            this.profileUrlLinkLabel.Size = new System.Drawing.Size(69, 16);
+            this.profileUrlLinkLabel.TabIndex = 24;
+            this.profileUrlLinkLabel.TabStop = true;
+            this.profileUrlLinkLabel.Text = "linkLabel1";
+            this.profileUrlLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.profileUrlLinkLabel_LinkClicked);
+            // 
+            // steamAvatarPictureBox
+            // 
+            this.steamAvatarPictureBox.Location = new System.Drawing.Point(82, 24);
+            this.steamAvatarPictureBox.Name = "steamAvatarPictureBox";
+            this.steamAvatarPictureBox.Size = new System.Drawing.Size(150, 150);
+            this.steamAvatarPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.steamAvatarPictureBox.TabIndex = 25;
+            this.steamAvatarPictureBox.TabStop = false;
+            // 
             // steamPlayerSummary
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1213, 569);
+            this.Controls.Add(this.steamAvatarPictureBox);
+            this.Controls.Add(this.profileUrlLinkLabel);
             this.Controls.Add(this.selectFriendButton);
             this.Controls.Add(this.friendsListLabel);
             this.Controls.Add(this.friendsListBox);
@@ -317,9 +310,6 @@
             this.Controls.Add(this.primaryClanIdLabel);
             this.Controls.Add(this.personaStateLabel);
             this.Controls.Add(this.lastLogoffLabel);
-            this.Controls.Add(this.avatarHashLabel);
-            this.Controls.Add(this.avatarFullLabel);
-            this.Controls.Add(this.avatarMediumLabel);
             this.Controls.Add(this.avatarLabel);
             this.Controls.Add(this.profileUrlLabel);
             this.Controls.Add(this.personaNameLabel);
@@ -328,6 +318,7 @@
             this.Controls.Add(this.steamIdLabel);
             this.Name = "steamPlayerSummary";
             this.Text = "Steam Player Investigator";
+            ((System.ComponentModel.ISupportInitialize)(this.steamAvatarPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -341,9 +332,6 @@
         private System.Windows.Forms.Label personaNameLabel;
         private System.Windows.Forms.Label profileUrlLabel;
         private System.Windows.Forms.Label avatarLabel;
-        private System.Windows.Forms.Label avatarMediumLabel;
-        private System.Windows.Forms.Label avatarFullLabel;
-        private System.Windows.Forms.Label avatarHashLabel;
         private System.Windows.Forms.Label lastLogoffLabel;
         private System.Windows.Forms.Label personaStateLabel;
         private System.Windows.Forms.Label primaryClanIdLabel;
@@ -359,5 +347,7 @@
         private System.Windows.Forms.ListBox friendsListBox;
         private System.Windows.Forms.Label friendsListLabel;
         private System.Windows.Forms.Button selectFriendButton;
+        private System.Windows.Forms.LinkLabel profileUrlLinkLabel;
+        private System.Windows.Forms.PictureBox steamAvatarPictureBox;
     }
 }

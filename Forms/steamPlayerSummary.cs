@@ -23,11 +23,8 @@ namespace steamPlayerInvestigator
             communityVisibilityStateLabel.Text = "Community Visibility State: " + pSteamUser.communityvisibilitystate;
             profileStateLabel.Text = "Profile State: " + pSteamUser.profilestate;
             personaNameLabel.Text = "Persona Name: " + pSteamUser.personaname;
-            profileUrlLabel.Text = "Profile URL: " + pSteamUser.profileurl;
-            avatarLabel.Text = "Avatar: " + pSteamUser.avatar;
-            avatarMediumLabel.Text = "Avatar Medium: " + pSteamUser.avatarmedium;
-            avatarFullLabel.Text = "Avatar Full: " + pSteamUser.avatarfull;
-            avatarHashLabel.Text = "Avatar Hash: " + pSteamUser.avatarhash;
+            profileUrlLinkLabel.Text = pSteamUser.profileurl;
+
             if (pSteamUser.lastlogoff == 0)
             {
                 lastLogoffLabel.Text = "Last Logoff: Unknown";
@@ -115,6 +112,8 @@ namespace steamPlayerInvestigator
                     friendsListBox.Items.Add(pSteamFriendsSummary[i].response.players[o].personaname);
                 }
             }
+
+            steamAvatarPictureBox.ImageLocation = pSteamUser.avatarfull;
 
             selectFriendButton.Click += new EventHandler(async (sender, EventArgs) => await selectFriendButton_Click(sender, EventArgs, currentSummaryCount, pSteamFriendsSummary));
         }
@@ -219,6 +218,13 @@ namespace steamPlayerInvestigator
 
             steamPlayerSummary steamPlayerSummaryForm = new steamPlayerSummary(steamUser.response.players[0], steamUserBans.players[0], steamUserFriends.friendslist, steamUserFriendsSummary, currentSummaryCount);
             steamPlayerSummaryForm.Show();
+        }
+
+        private void profileUrlLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.profileUrlLinkLabel.LinkVisited = true;
+
+            System.Diagnostics.Process.Start(profileUrlLinkLabel.Text);
         }
     }
 }
