@@ -31,6 +31,8 @@ namespace steamPlayerInvestigator
         public string EconomyBan { get; set; }
         public string relationship { get; set; }
         public int friend_since { get; set; }
+        public int levDistancePersona { get; set; }
+        public int levDistanceUrl { get; set; }
         public FriendsRoot friendsOfFriends { get; set; }
     }
 }

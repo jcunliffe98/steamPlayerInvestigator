@@ -31,6 +31,7 @@ namespace steamPlayerInvestigator
         public int DaysSinceLastBan { get; set; }
         public int NumberOfGameBans { get; set; }
         public string EconomyBan { get; set; }
+        public int levDistance { get; set; }
         public FriendsRoot friendsOfFriends { get; set; }
     }
 }

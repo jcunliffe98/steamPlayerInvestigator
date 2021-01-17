@@ -19,6 +19,17 @@ namespace steamPlayerInvestigator.Forms
         {
             InitializeComponent();
             List<Player> bannedPlayers = new List<Player>();
+            string shortUrlPlayer = "";
+            string shortUrlFriend;
+            bool shortUrlBool = false;
+            string[] steamUrlSplit;
+
+            if (pSteamUser.profileurl.Contains("id"))
+            {
+                steamUrlSplit = pSteamUser.profileurl.Split('/');
+                shortUrlPlayer = steamUrlSplit[4];
+                shortUrlBool = true;
+            }
 
             for(int i = 0; i < pSteamFriendsSummary.response.players.Count; i++)
             {
@@ -41,6 +52,32 @@ namespace steamPlayerInvestigator.Forms
                     }
                 }
             }
+
+            bannedPlayers = removeDuplicates(bannedPlayers);
+
+            for (int i = 0; i < bannedPlayers.Count; i++)
+            {
+                bannedPlayers[i].levDistancePersona = getLevenshteinDistance(pSteamUser.personaname, bannedPlayers[i].personaname);
+                bannedPlayers[i].levDistanceUrl = -1;
+            }
+
+            if (shortUrlBool == true)
+            {
+                for (int i = 0; i < bannedPlayers.Count; i++)
+                {
+                    if (bannedPlayers[i].profileurl.Contains(bannedPlayers[i].steamid))
+                    {
+                        bannedPlayers[i].levDistanceUrl = -1;
+                    }
+                    else
+                    {
+                        steamUrlSplit = bannedPlayers[i].profileurl.Split('/');
+                        shortUrlFriend = steamUrlSplit[4];
+                        bannedPlayers[i].levDistanceUrl = getLevenshteinDistance(shortUrlPlayer, shortUrlFriend);
+                    }
+                }
+            }
+
             MessageBox.Show("hi lol");
         }
 
@@ -72,6 +109,62 @@ namespace steamPlayerInvestigator.Forms
             tempPlayer.timecreated = pSteamFriendsSummary.response.players[i].friendsOfFriends.friendslist.friends[y].timecreated;
             tempPlayer.VACBanned = pSteamFriendsSummary.response.players[i].friendsOfFriends.friendslist.friends[y].VACBanned;
             return tempPlayer;
+        }
+
+        public int getLevenshteinDistance(string playerName, string friendName)
+        {
+            int playerNameLength = playerName.Length;
+            int friendNameLength = friendName.Length;
+
+            int[,] lengthArray = new int[playerNameLength + 1, friendNameLength + 1];
+
+
+            for (int i = 0; i <= playerNameLength; i++)
+            {
+                lengthArray[i, 0] = i;
+            }
+
+            for (int y = 0; y <= friendNameLength; lengthArray[0, y] = y++)
+            {
+                lengthArray[0, y] = y;
+            }
+
+
+            for (int i = 1; i <= playerNameLength; i++)
+            {
+                
+                for (int y = 1; y <= friendNameLength; y++)
+                {
+                    
+                    int cost = (friendName[y - 1] == playerName[i - 1]) ? 0 : 1;
+
+                    lengthArray[i, y] = Math.Min(Math.Min(lengthArray[i - 1, y] + 1, lengthArray[i, y - 1] + 1), lengthArray[i - 1, y - 1] + cost);
+                }
+            }
+            
+            return lengthArray[playerNameLength, friendNameLength];
+        }
+        
+        public List<Player> removeDuplicates(List<Player> bannedPlayers)
+        {
+            List<Player> removedDuplicatesBannedPlayers = new List<Player>();
+            for (int i = 0; i < bannedPlayers.Count; i++)
+            {
+                bool duplicateFound = false;
+                for (int y = 0; y < i; y++)
+                {
+                    if (bannedPlayers[i].steamid == bannedPlayers[y].steamid)
+                    {
+                        duplicateFound = true;
+                        break;
+                    }
+                }
+                if (!duplicateFound)
+                {
+                    removedDuplicatesBannedPlayers.Add(bannedPlayers[i]);
+                }
+            }
+            return removedDuplicatesBannedPlayers;
         }
     }
 }
