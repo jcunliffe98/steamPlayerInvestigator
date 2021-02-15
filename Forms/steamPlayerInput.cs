@@ -364,6 +364,7 @@ namespace steamPlayerInvestigator
             else
             {
                 MessageBox.Show("Friends List can't be retrieved");
+                return;
             }
 
             SummaryRoot summaryFriends = steamUserFriendsSummary[0];

@@ -38,7 +38,6 @@
             this.personaStateLabel = new System.Windows.Forms.Label();
             this.primaryClanIdLabel = new System.Windows.Forms.Label();
             this.timeCreatedLabel = new System.Windows.Forms.Label();
-            this.personaStateFlagsLabel = new System.Windows.Forms.Label();
             this.locCountryCodeLabel = new System.Windows.Forms.Label();
             this.communityBannedLabel = new System.Windows.Forms.Label();
             this.vacBannedLabel = new System.Windows.Forms.Label();
@@ -68,7 +67,7 @@
             // 
             this.communityVisibilityStateLabel.AutoSize = true;
             this.communityVisibilityStateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.communityVisibilityStateLabel.Location = new System.Drawing.Point(12, 228);
+            this.communityVisibilityStateLabel.Location = new System.Drawing.Point(12, 231);
             this.communityVisibilityStateLabel.Name = "communityVisibilityStateLabel";
             this.communityVisibilityStateLabel.Size = new System.Drawing.Size(163, 16);
             this.communityVisibilityStateLabel.TabIndex = 1;
@@ -78,7 +77,7 @@
             // 
             this.profileStateLabel.AutoSize = true;
             this.profileStateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.profileStateLabel.Location = new System.Drawing.Point(12, 262);
+            this.profileStateLabel.Location = new System.Drawing.Point(12, 268);
             this.profileStateLabel.Name = "profileStateLabel";
             this.profileStateLabel.Size = new System.Drawing.Size(83, 16);
             this.profileStateLabel.TabIndex = 2;
@@ -88,7 +87,7 @@
             // 
             this.personaNameLabel.AutoSize = true;
             this.personaNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.personaNameLabel.Location = new System.Drawing.Point(12, 296);
+            this.personaNameLabel.Location = new System.Drawing.Point(12, 305);
             this.personaNameLabel.Name = "personaNameLabel";
             this.personaNameLabel.Size = new System.Drawing.Size(102, 16);
             this.personaNameLabel.TabIndex = 3;
@@ -98,7 +97,7 @@
             // 
             this.profileUrlLabel.AutoSize = true;
             this.profileUrlLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.profileUrlLabel.Location = new System.Drawing.Point(12, 330);
+            this.profileUrlLabel.Location = new System.Drawing.Point(12, 342);
             this.profileUrlLabel.Name = "profileUrlLabel";
             this.profileUrlLabel.Size = new System.Drawing.Size(69, 16);
             this.profileUrlLabel.TabIndex = 4;
@@ -118,7 +117,7 @@
             // 
             this.lastLogoffLabel.AutoSize = true;
             this.lastLogoffLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lastLogoffLabel.Location = new System.Drawing.Point(12, 364);
+            this.lastLogoffLabel.Location = new System.Drawing.Point(12, 379);
             this.lastLogoffLabel.Name = "lastLogoffLabel";
             this.lastLogoffLabel.Size = new System.Drawing.Size(76, 16);
             this.lastLogoffLabel.TabIndex = 9;
@@ -128,7 +127,7 @@
             // 
             this.personaStateLabel.AutoSize = true;
             this.personaStateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.personaStateLabel.Location = new System.Drawing.Point(12, 398);
+            this.personaStateLabel.Location = new System.Drawing.Point(12, 416);
             this.personaStateLabel.Name = "personaStateLabel";
             this.personaStateLabel.Size = new System.Drawing.Size(96, 16);
             this.personaStateLabel.TabIndex = 10;
@@ -138,7 +137,7 @@
             // 
             this.primaryClanIdLabel.AutoSize = true;
             this.primaryClanIdLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.primaryClanIdLabel.Location = new System.Drawing.Point(12, 432);
+            this.primaryClanIdLabel.Location = new System.Drawing.Point(12, 453);
             this.primaryClanIdLabel.Name = "primaryClanIdLabel";
             this.primaryClanIdLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.primaryClanIdLabel.Size = new System.Drawing.Size(103, 16);
@@ -149,29 +148,18 @@
             // 
             this.timeCreatedLabel.AutoSize = true;
             this.timeCreatedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.timeCreatedLabel.Location = new System.Drawing.Point(12, 466);
+            this.timeCreatedLabel.Location = new System.Drawing.Point(12, 490);
             this.timeCreatedLabel.Name = "timeCreatedLabel";
             this.timeCreatedLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.timeCreatedLabel.Size = new System.Drawing.Size(93, 16);
             this.timeCreatedLabel.TabIndex = 12;
             this.timeCreatedLabel.Text = "Time Created:";
             // 
-            // personaStateFlagsLabel
-            // 
-            this.personaStateFlagsLabel.AutoSize = true;
-            this.personaStateFlagsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.personaStateFlagsLabel.Location = new System.Drawing.Point(12, 500);
-            this.personaStateFlagsLabel.Name = "personaStateFlagsLabel";
-            this.personaStateFlagsLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.personaStateFlagsLabel.Size = new System.Drawing.Size(133, 16);
-            this.personaStateFlagsLabel.TabIndex = 13;
-            this.personaStateFlagsLabel.Text = "Persona State Flags:";
-            // 
             // locCountryCodeLabel
             // 
             this.locCountryCodeLabel.AutoSize = true;
             this.locCountryCodeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.locCountryCodeLabel.Location = new System.Drawing.Point(12, 534);
+            this.locCountryCodeLabel.Location = new System.Drawing.Point(12, 527);
             this.locCountryCodeLabel.Name = "locCountryCodeLabel";
             this.locCountryCodeLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.locCountryCodeLabel.Size = new System.Drawing.Size(92, 16);
@@ -271,7 +259,7 @@
             // 
             this.profileUrlLinkLabel.AutoSize = true;
             this.profileUrlLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.profileUrlLinkLabel.Location = new System.Drawing.Point(79, 330);
+            this.profileUrlLinkLabel.Location = new System.Drawing.Point(75, 342);
             this.profileUrlLinkLabel.Name = "profileUrlLinkLabel";
             this.profileUrlLinkLabel.Size = new System.Drawing.Size(69, 16);
             this.profileUrlLinkLabel.TabIndex = 24;
@@ -305,7 +293,6 @@
             this.Controls.Add(this.vacBannedLabel);
             this.Controls.Add(this.communityBannedLabel);
             this.Controls.Add(this.locCountryCodeLabel);
-            this.Controls.Add(this.personaStateFlagsLabel);
             this.Controls.Add(this.timeCreatedLabel);
             this.Controls.Add(this.primaryClanIdLabel);
             this.Controls.Add(this.personaStateLabel);
@@ -336,7 +323,6 @@
         private System.Windows.Forms.Label personaStateLabel;
         private System.Windows.Forms.Label primaryClanIdLabel;
         private System.Windows.Forms.Label timeCreatedLabel;
-        private System.Windows.Forms.Label personaStateFlagsLabel;
         private System.Windows.Forms.Label locCountryCodeLabel;
         private System.Windows.Forms.Label communityBannedLabel;
         private System.Windows.Forms.Label vacBannedLabel;

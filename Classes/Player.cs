@@ -9,6 +9,7 @@ namespace steamPlayerInvestigator
     public class Player
     {
         public string steamid { get; set; }
+        public double similarityscore { get; set; }
         public int communityvisibilitystate { get; set; }
         public int profilestate { get; set; }
         public string personaname { get; set; }
@@ -21,6 +22,7 @@ namespace steamPlayerInvestigator
         public int personastate { get; set; }
         public string primaryclanid { get; set; }
         public long timecreated { get; set; }
+        public bool createdAfter { get; set; }
         public int personastateflags { get; set; }
         public string loccountrycode { get; set; }
         public bool CommunityBanned { get; set; }
@@ -31,8 +33,8 @@ namespace steamPlayerInvestigator
         public string EconomyBan { get; set; }
         public string relationship { get; set; }
         public int friend_since { get; set; }
-        public int levDistancePersona { get; set; }
-        public int levDistanceUrl { get; set; }
+        public double levDistancePersona { get; set; }
+        public double levDistanceUrl { get; set; }
         public FriendsRoot friendsOfFriends { get; set; }
     }
 }

@@ -15,9 +15,11 @@ namespace steamPlayerInvestigator.Forms
 {
     public partial class steamAutomaticInvestigation : Form
     {
+
         public steamAutomaticInvestigation(Player pSteamUser, PlayerBans pSteamUserBans, SummaryRoot pSteamFriendsSummary)
         {
             InitializeComponent();
+
             List<Player> bannedPlayers = new List<Player>();
             string shortUrlPlayer = "";
             string shortUrlFriend;
@@ -57,7 +59,11 @@ namespace steamPlayerInvestigator.Forms
 
             for (int i = 0; i < bannedPlayers.Count; i++)
             {
-                bannedPlayers[i].levDistancePersona = getLevenshteinDistance(pSteamUser.personaname, bannedPlayers[i].personaname);
+                if(bannedPlayers[i].personaname == null)
+                {
+                    continue;
+                }
+                bannedPlayers[i].levDistancePersona = levenshteinPercentage(pSteamUser.personaname, bannedPlayers[i].personaname);
                 bannedPlayers[i].levDistanceUrl = -1;
             }
 
@@ -65,7 +71,11 @@ namespace steamPlayerInvestigator.Forms
             {
                 for (int i = 0; i < bannedPlayers.Count; i++)
                 {
-                    if (bannedPlayers[i].profileurl.Contains(bannedPlayers[i].steamid))
+                    if (bannedPlayers[i].profileurl == null)
+                    {
+                        continue;
+                    }
+                    else if (bannedPlayers[i].profileurl.Contains(bannedPlayers[i].steamid))
                     {
                         bannedPlayers[i].levDistanceUrl = -1;
                     }
@@ -73,12 +83,42 @@ namespace steamPlayerInvestigator.Forms
                     {
                         steamUrlSplit = bannedPlayers[i].profileurl.Split('/');
                         shortUrlFriend = steamUrlSplit[4];
-                        bannedPlayers[i].levDistanceUrl = getLevenshteinDistance(shortUrlPlayer, shortUrlFriend);
+                        if (bannedPlayers[i].profileurl == null)
+                        {
+                            continue;
+                        }
+                        bannedPlayers[i].levDistanceUrl = levenshteinPercentage(shortUrlPlayer, shortUrlFriend);
                     }
                 }
             }
 
-            MessageBox.Show("hi lol");
+            for (int i = 0; i < bannedPlayers.Count; i++)
+            {
+                if(bannedPlayers[i].levDistanceUrl == -1)
+                {
+                    bannedPlayers[i].similarityscore = bannedPlayers[i].levDistancePersona;
+                }
+                else
+                {
+                    bannedPlayers[i].similarityscore = (bannedPlayers[i].levDistancePersona + bannedPlayers[i].levDistanceUrl) / 2;
+                }
+
+                if (bannedPlayers[i].timecreated > pSteamUser.timecreated)
+                {
+                    bannedPlayers[i].createdAfter = true;
+
+                    // Will need to adjust later
+                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore + 5;
+                }
+                else
+                {
+                    bannedPlayers[i].createdAfter = false;
+
+                    // Will need to adjust later
+                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore - 5;
+                }
+            }
+            Console.ReadLine();
         }
 
         public Player getPlayer(SummaryRoot pSteamFriendsSummary, int i, int y)
@@ -111,6 +151,18 @@ namespace steamPlayerInvestigator.Forms
             return tempPlayer;
         }
 
+        public double levenshteinPercentage(string playerName, string friendName)
+        {
+            if (playerName == friendName)
+            {
+                return 1.0;
+            }
+
+            int stepsToSame = getLevenshteinDistance(playerName, friendName);
+            double percentage = (1.0 - ((double)stepsToSame / (double)Math.Max(playerName.Length, friendName.Length)));
+            return percentage;
+        }
+
         public int getLevenshteinDistance(string playerName, string friendName)
         {
             int playerNameLength = playerName.Length;
@@ -135,8 +187,15 @@ namespace steamPlayerInvestigator.Forms
                 
                 for (int y = 1; y <= friendNameLength; y++)
                 {
-                    
-                    int cost = (friendName[y - 1] == playerName[i - 1]) ? 0 : 1;
+                    int cost;
+                    if(friendName[y - 1] == playerName[i - 1])
+                    {
+                        cost = 0;
+                    }
+                    else
+                    {
+                        cost = 1;
+                    }
 
                     lengthArray[i, y] = Math.Min(Math.Min(lengthArray[i - 1, y] + 1, lengthArray[i, y - 1] + 1), lengthArray[i - 1, y - 1] + cost);
                 }
@@ -144,7 +203,9 @@ namespace steamPlayerInvestigator.Forms
             
             return lengthArray[playerNameLength, friendNameLength];
         }
-        
+
+
+
         public List<Player> removeDuplicates(List<Player> bannedPlayers)
         {
             List<Player> removedDuplicatesBannedPlayers = new List<Player>();

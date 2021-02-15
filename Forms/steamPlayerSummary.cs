@@ -21,7 +21,15 @@ namespace steamPlayerInvestigator
 
             steamIdLabel.Text = "Steam ID:  " + pSteamUser.steamid;
             communityVisibilityStateLabel.Text = "Community Visibility State: " + pSteamUser.communityvisibilitystate;
-            profileStateLabel.Text = "Profile State: " + pSteamUser.profilestate;
+
+            if(pSteamUser.profilestate == 0)
+            {
+                profileStateLabel.Text = "Profile Configured: False";
+            }
+            else
+            {
+                profileStateLabel.Text = "Profile Configured: True";
+            }
             personaNameLabel.Text = "Persona Name: " + pSteamUser.personaname;
             profileUrlLinkLabel.Text = pSteamUser.profileurl;
 
@@ -33,10 +41,46 @@ namespace steamPlayerInvestigator
             {
                 lastLogoffLabel.Text = "Last Logoff: " + UnixTimeToDateTime(pSteamUser.lastlogoff);
             }
-            personaStateLabel.Text = "Persona State: " + pSteamUser.personastate;
+
+            if(pSteamUser.personastate == 0)
+            {
+                personaStateLabel.Text = "Persona State: Offline";
+            }
+            else if(pSteamUser.personastate == 1)
+            {
+                personaStateLabel.Text = "Persona State: Online";
+            }
+            else if (pSteamUser.personastate == 2)
+            {
+                personaStateLabel.Text = "Persona State: Busy";
+            }
+            else if (pSteamUser.personastate == 3)
+            {
+                personaStateLabel.Text = "Persona State: Away";
+            }
+            else if (pSteamUser.personastate == 4)
+            {
+                personaStateLabel.Text = "Persona State: Snooze";
+            }
+            else if (pSteamUser.personastate == 5)
+            {
+                personaStateLabel.Text = "Persona State: Looking to trade";
+            }
+            else if (pSteamUser.personastate == 6)
+            {
+                personaStateLabel.Text = "Persona State: Looking to play";
+            }
+
             primaryClanIdLabel.Text = "Primary Clan ID: " + pSteamUser.primaryclanid;
             timeCreatedLabel.Text = "Time Created: " + UnixTimeToDateTime(pSteamUser.timecreated);
-            personaStateFlagsLabel.Text = "Persona State Flags: " + pSteamUser.personastateflags;
+            if(pSteamUser.communityvisibilitystate == 1)
+            {
+                communityVisibilityStateLabel.Text = "Community Visibility: Private";
+            }
+            else
+            {
+                communityVisibilityStateLabel.Text = "Community Visibility: Public";
+            }
             locCountryCodeLabel.Text = "Loc Country Code: " + pSteamUser.loccountrycode;
 
             communityBannedLabel.Text = "Community Banned: " + pSteamUserBans.CommunityBanned;
