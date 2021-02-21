@@ -20,6 +20,7 @@ namespace steamPlayerInvestigator.Forms
         {
             InitializeComponent();
 
+
             List<Player> bannedPlayers = new List<Player>();
             string shortUrlPlayer = "";
             string shortUrlFriend;
@@ -103,7 +104,11 @@ namespace steamPlayerInvestigator.Forms
                     bannedPlayers[i].similarityscore = (bannedPlayers[i].levDistancePersona + bannedPlayers[i].levDistanceUrl) / 2;
                 }
 
-                if (bannedPlayers[i].timecreated > pSteamUser.timecreated)
+                if (bannedPlayers[i].timecreated == 0 || pSteamUser.timecreated == 0)
+                {
+                    continue;
+                }
+                else if (bannedPlayers[i].timecreated > pSteamUser.timecreated)
                 {
                     bannedPlayers[i].createdAfter = true;
 
@@ -118,7 +123,11 @@ namespace steamPlayerInvestigator.Forms
                     bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore - 5;
                 }
 
-                if(bannedPlayers[i].loccountrycode == pSteamUser.loccountrycode)
+                if (bannedPlayers[i].loccountrycode == null || pSteamUser.loccountrycode == null)
+                {
+                    continue;
+                }
+                else if (bannedPlayers[i].loccountrycode == pSteamUser.loccountrycode)
                 {
                     bannedPlayers[i].sameCountry = true;
 
@@ -136,14 +145,73 @@ namespace steamPlayerInvestigator.Forms
                 if(bannedPlayers[i].personastate == 1 && pSteamUser.personastate == 1)
                 {
                     // Will need to adjust later
-                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore + 10;
+                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore - 10;
                     bannedPlayers[i].onlineAtSameTime = true;
                 }
                 else
                 {
+                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore + 10;
                     bannedPlayers[i].onlineAtSameTime = false;
                 }
             }
+
+            steamUserAvatar.ImageLocation = pSteamUser.avatarfull;
+            steamUserNameLabel.Text = "Steam Name: " + pSteamUser.personaname;
+            steamUserUrlLabel.Text = "Profile Url: " + pSteamUser.profileurl;
+            steamSimilarAccountUrlLabel.Text = "Profile Url: " + pSteamUser.profileurl;
+
+            if (pSteamUser.personastate == 0)
+            {
+                steamUserStatusLabel.Text = "Current Status: Offline";
+            }
+            else if (pSteamUser.personastate == 1)
+            {
+                steamUserStatusLabel.Text = "Current Status: Online";
+            }
+            else if (pSteamUser.personastate == 2)
+            {
+                steamUserStatusLabel.Text = "Current Status: Busy";
+            }
+            else if (pSteamUser.personastate == 3)
+            {
+                steamUserStatusLabel.Text = "Current Status: Away";
+            }
+            else if (pSteamUser.personastate == 4)
+            {
+                steamUserStatusLabel.Text = "Current Status: Snooze";
+            }
+            else if (pSteamUser.personastate == 5)
+            {
+                steamUserStatusLabel.Text = "Current Status: Looking to trade";
+            }
+            else if (pSteamUser.personastate == 6)
+            {
+                steamUserStatusLabel.Text = "Current Status: Looking to play";
+            }
+
+            if(pSteamUser.timecreated == 0)
+            {
+                steamUserAccountCreatedLabel.Text = "Account Created: Unknown";
+            }
+            else
+            {
+                steamUserAccountCreatedLabel.Text = "Account Created: " + UnixTimeToDateTime(pSteamUser.timecreated);
+            }
+
+            steamUserClanLabel.Text = "Primary Clan ID: " + pSteamUser.primaryclanid;
+
+            if(pSteamUser.loccountrycode == "" || pSteamUser.loccountrycode == null)
+            {
+                steamUserCountryCodeLabel.Text = "Country Code: Unknown";
+            }
+            else
+            {
+                steamUserCountryCodeLabel.Text = "Country Code: " + pSteamUser.loccountrycode;
+            }
+
+            steamUserBanCountLabel.Text = "Number of bans: " + (pSteamUser.NumberOfGameBans + pSteamUser.NumberOfVACBans);
+            steamUserDaysSinceLastBanLabel.Text = "Days since last ban: " + pSteamUser.DaysSinceLastBan;
+
             Console.ReadLine();
         }
 
@@ -254,9 +322,11 @@ namespace steamPlayerInvestigator.Forms
             return removedDuplicatesBannedPlayers;
         }
 
-        private void steamAutomaticInvestigation_Load(object sender, EventArgs e)
+        static public DateTime UnixTimeToDateTime(long unixtime)
         {
-
+            DateTime newDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            newDateTime = newDateTime.AddSeconds(unixtime).ToLocalTime();
+            return newDateTime;
         }
     }
 }
