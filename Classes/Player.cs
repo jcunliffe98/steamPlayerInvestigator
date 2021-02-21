@@ -20,11 +20,13 @@ namespace steamPlayerInvestigator
         public string avatarhash { get; set; }
         public long lastlogoff { get; set; }
         public int personastate { get; set; }
+        public bool onlineAtSameTime { get; set; }
         public string primaryclanid { get; set; }
         public long timecreated { get; set; }
         public bool createdAfter { get; set; }
         public int personastateflags { get; set; }
         public string loccountrycode { get; set; }
+        public bool sameCountry { get; set; }
         public bool CommunityBanned { get; set; }
         public bool VACBanned { get; set; }
         public int NumberOfVACBans { get; set; }

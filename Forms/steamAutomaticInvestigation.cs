@@ -117,6 +117,32 @@ namespace steamPlayerInvestigator.Forms
                     // Will need to adjust later
                     bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore - 5;
                 }
+
+                if(bannedPlayers[i].loccountrycode == pSteamUser.loccountrycode)
+                {
+                    bannedPlayers[i].sameCountry = true;
+
+                    // Will need to adjust later
+                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore + 5;
+                }
+                else
+                {
+                    bannedPlayers[i].sameCountry = false;
+
+                    // Will need to adjust later
+                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore - 5;
+                }
+
+                if(bannedPlayers[i].personastate == 1 && pSteamUser.personastate == 1)
+                {
+                    // Will need to adjust later
+                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore + 10;
+                    bannedPlayers[i].onlineAtSameTime = true;
+                }
+                else
+                {
+                    bannedPlayers[i].onlineAtSameTime = false;
+                }
             }
             Console.ReadLine();
         }
