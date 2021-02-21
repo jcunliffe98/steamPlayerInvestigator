@@ -253,5 +253,10 @@ namespace steamPlayerInvestigator.Forms
             }
             return removedDuplicatesBannedPlayers;
         }
+
+        private void steamAutomaticInvestigation_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
