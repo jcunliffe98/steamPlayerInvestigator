@@ -39,8 +39,8 @@ namespace steamPlayerInvestigator.Forms
             this.label7 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
+            this.steamNamesLabel = new System.Windows.Forms.Label();
+            this.steamUrlLabel = new System.Windows.Forms.Label();
             this.steamUserUrlLabel = new System.Windows.Forms.Label();
             this.steamSimilarAccountUrlLabel = new System.Windows.Forms.Label();
             this.steamUserStatusLabel = new System.Windows.Forms.Label();
@@ -48,17 +48,17 @@ namespace steamPlayerInvestigator.Forms
             this.label17 = new System.Windows.Forms.Label();
             this.steamUserAccountCreatedLabel = new System.Windows.Forms.Label();
             this.steamSimilarAccountCreatedLabel = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
+            this.timeCreatedLabel = new System.Windows.Forms.Label();
             this.steamUserClanLabel = new System.Windows.Forms.Label();
             this.steamSimilarAccountClanLabel = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
+            this.clanIdLabel = new System.Windows.Forms.Label();
             this.steamUserCountryCodeLabel = new System.Windows.Forms.Label();
             this.steamSimilarAccountCountryCodeLabel = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
+            this.countryCodeLabel = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
-            this.label36 = new System.Windows.Forms.Label();
+            this.similarityScoreLabel = new System.Windows.Forms.Label();
             this.steamUserBanCountLabel = new System.Windows.Forms.Label();
             this.similarAccountBanCountLabel = new System.Windows.Forms.Label();
             this.steamUserDaysSinceLastBanLabel = new System.Windows.Forms.Label();
@@ -88,7 +88,7 @@ namespace steamPlayerInvestigator.Forms
             // 
             this.playerInvestigatedLabel.AutoSize = true;
             this.playerInvestigatedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.playerInvestigatedLabel.Location = new System.Drawing.Point(44, 9);
+            this.playerInvestigatedLabel.Location = new System.Drawing.Point(126, 9);
             this.playerInvestigatedLabel.Name = "playerInvestigatedLabel";
             this.playerInvestigatedLabel.Size = new System.Drawing.Size(198, 20);
             this.playerInvestigatedLabel.TabIndex = 28;
@@ -98,7 +98,7 @@ namespace steamPlayerInvestigator.Forms
             // 
             this.steamUserNameLabel.AutoSize = true;
             this.steamUserNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.steamUserNameLabel.Location = new System.Drawing.Point(8, 140);
+            this.steamUserNameLabel.Location = new System.Drawing.Point(3, 140);
             this.steamUserNameLabel.Name = "steamUserNameLabel";
             this.steamUserNameLabel.Size = new System.Drawing.Size(106, 20);
             this.steamUserNameLabel.TabIndex = 29;
@@ -106,7 +106,7 @@ namespace steamPlayerInvestigator.Forms
             // 
             // steamSimilarAccountAvatar
             // 
-            this.steamSimilarAccountAvatar.Location = new System.Drawing.Point(688, 44);
+            this.steamSimilarAccountAvatar.Location = new System.Drawing.Point(625, 44);
             this.steamSimilarAccountAvatar.Name = "steamSimilarAccountAvatar";
             this.steamSimilarAccountAvatar.Size = new System.Drawing.Size(75, 75);
             this.steamSimilarAccountAvatar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -117,7 +117,7 @@ namespace steamPlayerInvestigator.Forms
             // 
             this.mostSimilarAccountLabel.AutoSize = true;
             this.mostSimilarAccountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mostSimilarAccountLabel.Location = new System.Drawing.Point(607, 6);
+            this.mostSimilarAccountLabel.Location = new System.Drawing.Point(735, 6);
             this.mostSimilarAccountLabel.Name = "mostSimilarAccountLabel";
             this.mostSimilarAccountLabel.Size = new System.Drawing.Size(178, 20);
             this.mostSimilarAccountLabel.TabIndex = 31;
@@ -127,7 +127,7 @@ namespace steamPlayerInvestigator.Forms
             // 
             this.steamSimilarAccountNameLabel.AutoSize = true;
             this.steamSimilarAccountNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.steamSimilarAccountNameLabel.Location = new System.Drawing.Point(607, 140);
+            this.steamSimilarAccountNameLabel.Location = new System.Drawing.Point(560, 140);
             this.steamSimilarAccountNameLabel.Name = "steamSimilarAccountNameLabel";
             this.steamSimilarAccountNameLabel.Size = new System.Drawing.Size(106, 20);
             this.steamSimilarAccountNameLabel.TabIndex = 32;
@@ -137,7 +137,7 @@ namespace steamPlayerInvestigator.Forms
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label6.Location = new System.Drawing.Point(8, 58);
+            this.label6.Location = new System.Drawing.Point(3, 68);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(59, 20);
             this.label6.TabIndex = 35;
@@ -147,7 +147,7 @@ namespace steamPlayerInvestigator.Forms
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label7.Location = new System.Drawing.Point(607, 58);
+            this.label7.Location = new System.Drawing.Point(560, 68);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(59, 20);
             this.label7.TabIndex = 36;
@@ -171,31 +171,31 @@ namespace steamPlayerInvestigator.Forms
             this.label10.Size = new System.Drawing.Size(10, 607);
             this.label10.TabIndex = 39;
             // 
-            // label11
+            // steamNamesLabel
             // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label11.Location = new System.Drawing.Point(1086, 140);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(201, 20);
-            this.label11.TabIndex = 40;
-            this.label11.Text = "Steam names are % similar";
+            this.steamNamesLabel.AutoSize = true;
+            this.steamNamesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.steamNamesLabel.Location = new System.Drawing.Point(1086, 140);
+            this.steamNamesLabel.Name = "steamNamesLabel";
+            this.steamNamesLabel.Size = new System.Drawing.Size(201, 20);
+            this.steamNamesLabel.TabIndex = 40;
+            this.steamNamesLabel.Text = "Steam names are % similar";
             // 
-            // label12
+            // steamUrlLabel
             // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label12.Location = new System.Drawing.Point(1086, 170);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(175, 20);
-            this.label12.TabIndex = 41;
-            this.label12.Text = "Profile urls are % similar";
+            this.steamUrlLabel.AutoSize = true;
+            this.steamUrlLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.steamUrlLabel.Location = new System.Drawing.Point(1086, 170);
+            this.steamUrlLabel.Name = "steamUrlLabel";
+            this.steamUrlLabel.Size = new System.Drawing.Size(175, 20);
+            this.steamUrlLabel.TabIndex = 41;
+            this.steamUrlLabel.Text = "Profile urls are % similar";
             // 
             // steamUserUrlLabel
             // 
             this.steamUserUrlLabel.AutoSize = true;
             this.steamUserUrlLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.steamUserUrlLabel.Location = new System.Drawing.Point(8, 170);
+            this.steamUserUrlLabel.Location = new System.Drawing.Point(3, 170);
             this.steamUserUrlLabel.Name = "steamUserUrlLabel";
             this.steamUserUrlLabel.Size = new System.Drawing.Size(81, 20);
             this.steamUserUrlLabel.TabIndex = 42;
@@ -215,7 +215,7 @@ namespace steamPlayerInvestigator.Forms
             // 
             this.steamUserStatusLabel.AutoSize = true;
             this.steamUserStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.steamUserStatusLabel.Location = new System.Drawing.Point(8, 198);
+            this.steamUserStatusLabel.Location = new System.Drawing.Point(3, 198);
             this.steamUserStatusLabel.Name = "steamUserStatusLabel";
             this.steamUserStatusLabel.Size = new System.Drawing.Size(117, 20);
             this.steamUserStatusLabel.TabIndex = 44;
@@ -225,7 +225,7 @@ namespace steamPlayerInvestigator.Forms
             // 
             this.steamSimilarAccountStatusLabel.AutoSize = true;
             this.steamSimilarAccountStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.steamSimilarAccountStatusLabel.Location = new System.Drawing.Point(607, 198);
+            this.steamSimilarAccountStatusLabel.Location = new System.Drawing.Point(560, 198);
             this.steamSimilarAccountStatusLabel.Name = "steamSimilarAccountStatusLabel";
             this.steamSimilarAccountStatusLabel.Size = new System.Drawing.Size(117, 20);
             this.steamSimilarAccountStatusLabel.TabIndex = 45;
@@ -245,7 +245,7 @@ namespace steamPlayerInvestigator.Forms
             // 
             this.steamUserAccountCreatedLabel.AutoSize = true;
             this.steamUserAccountCreatedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.steamUserAccountCreatedLabel.Location = new System.Drawing.Point(8, 228);
+            this.steamUserAccountCreatedLabel.Location = new System.Drawing.Point(3, 228);
             this.steamUserAccountCreatedLabel.Name = "steamUserAccountCreatedLabel";
             this.steamUserAccountCreatedLabel.Size = new System.Drawing.Size(133, 20);
             this.steamUserAccountCreatedLabel.TabIndex = 47;
@@ -255,21 +255,21 @@ namespace steamPlayerInvestigator.Forms
             // 
             this.steamSimilarAccountCreatedLabel.AutoSize = true;
             this.steamSimilarAccountCreatedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.steamSimilarAccountCreatedLabel.Location = new System.Drawing.Point(607, 228);
+            this.steamSimilarAccountCreatedLabel.Location = new System.Drawing.Point(560, 228);
             this.steamSimilarAccountCreatedLabel.Name = "steamSimilarAccountCreatedLabel";
             this.steamSimilarAccountCreatedLabel.Size = new System.Drawing.Size(133, 20);
             this.steamSimilarAccountCreatedLabel.TabIndex = 48;
             this.steamSimilarAccountCreatedLabel.Text = "Account Created:";
             // 
-            // label20
+            // timeCreatedLabel
             // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label20.Location = new System.Drawing.Point(1086, 228);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(423, 20);
-            this.label20.TabIndex = 49;
-            this.label20.Text = "Similar account was made after account being investigated";
+            this.timeCreatedLabel.AutoSize = true;
+            this.timeCreatedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.timeCreatedLabel.Location = new System.Drawing.Point(1086, 228);
+            this.timeCreatedLabel.Name = "timeCreatedLabel";
+            this.timeCreatedLabel.Size = new System.Drawing.Size(423, 20);
+            this.timeCreatedLabel.TabIndex = 49;
+            this.timeCreatedLabel.Text = "Similar account was made after account being investigated";
             // 
             // steamUserClanLabel
             // 
@@ -285,21 +285,21 @@ namespace steamPlayerInvestigator.Forms
             // 
             this.steamSimilarAccountClanLabel.AutoSize = true;
             this.steamSimilarAccountClanLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.steamSimilarAccountClanLabel.Location = new System.Drawing.Point(607, 255);
+            this.steamSimilarAccountClanLabel.Location = new System.Drawing.Point(561, 255);
             this.steamSimilarAccountClanLabel.Name = "steamSimilarAccountClanLabel";
             this.steamSimilarAccountClanLabel.Size = new System.Drawing.Size(122, 20);
             this.steamSimilarAccountClanLabel.TabIndex = 51;
             this.steamSimilarAccountClanLabel.Text = "Primary Clan ID:";
             // 
-            // label23
+            // clanIdLabel
             // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label23.Location = new System.Drawing.Point(1086, 255);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(167, 20);
-            this.label23.TabIndex = 52;
-            this.label23.Text = "Clan IDs are the same";
+            this.clanIdLabel.AutoSize = true;
+            this.clanIdLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.clanIdLabel.Location = new System.Drawing.Point(1086, 255);
+            this.clanIdLabel.Name = "clanIdLabel";
+            this.clanIdLabel.Size = new System.Drawing.Size(167, 20);
+            this.clanIdLabel.TabIndex = 52;
+            this.clanIdLabel.Text = "Clan IDs are the same";
             // 
             // steamUserCountryCodeLabel
             // 
@@ -315,21 +315,21 @@ namespace steamPlayerInvestigator.Forms
             // 
             this.steamSimilarAccountCountryCodeLabel.AutoSize = true;
             this.steamSimilarAccountCountryCodeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.steamSimilarAccountCountryCodeLabel.Location = new System.Drawing.Point(607, 284);
+            this.steamSimilarAccountCountryCodeLabel.Location = new System.Drawing.Point(561, 284);
             this.steamSimilarAccountCountryCodeLabel.Name = "steamSimilarAccountCountryCodeLabel";
             this.steamSimilarAccountCountryCodeLabel.Size = new System.Drawing.Size(110, 20);
             this.steamSimilarAccountCountryCodeLabel.TabIndex = 54;
             this.steamSimilarAccountCountryCodeLabel.Text = "Country Code:";
             // 
-            // label26
+            // countryCodeLabel
             // 
-            this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label26.Location = new System.Drawing.Point(1086, 284);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(211, 20);
-            this.label26.TabIndex = 55;
-            this.label26.Text = "Country Codes are the same";
+            this.countryCodeLabel.AutoSize = true;
+            this.countryCodeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.countryCodeLabel.Location = new System.Drawing.Point(1086, 284);
+            this.countryCodeLabel.Name = "countryCodeLabel";
+            this.countryCodeLabel.Size = new System.Drawing.Size(211, 20);
+            this.countryCodeLabel.TabIndex = 55;
+            this.countryCodeLabel.Text = "Country Codes are the same";
             // 
             // label27
             // 
@@ -343,31 +343,31 @@ namespace steamPlayerInvestigator.Forms
             // 
             this.label34.AutoSize = true;
             this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label34.Location = new System.Drawing.Point(91, 338);
+            this.label34.Location = new System.Drawing.Point(226, 338);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(50, 20);
+            this.label34.Size = new System.Drawing.Size(46, 20);
             this.label34.TabIndex = 63;
-            this.label34.Text = "Bans:";
+            this.label34.Text = "Bans";
             // 
             // label35
             // 
             this.label35.AutoSize = true;
             this.label35.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label35.Location = new System.Drawing.Point(818, 338);
+            this.label35.Location = new System.Drawing.Point(777, 338);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(50, 20);
+            this.label35.Size = new System.Drawing.Size(46, 20);
             this.label35.TabIndex = 64;
-            this.label35.Text = "Bans:";
+            this.label35.Text = "Bans";
             // 
-            // label36
+            // similarityScoreLabel
             // 
-            this.label36.AutoSize = true;
-            this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label36.Location = new System.Drawing.Point(1086, 58);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(198, 20);
-            this.label36.TabIndex = 65;
-            this.label36.Text = "Overall Similarity Score:";
+            this.similarityScoreLabel.AutoSize = true;
+            this.similarityScoreLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.similarityScoreLabel.Location = new System.Drawing.Point(1089, 68);
+            this.similarityScoreLabel.Name = "similarityScoreLabel";
+            this.similarityScoreLabel.Size = new System.Drawing.Size(198, 20);
+            this.similarityScoreLabel.TabIndex = 65;
+            this.similarityScoreLabel.Text = "Overall Similarity Score:";
             // 
             // steamUserBanCountLabel
             // 
@@ -383,7 +383,7 @@ namespace steamPlayerInvestigator.Forms
             // 
             this.similarAccountBanCountLabel.AutoSize = true;
             this.similarAccountBanCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.similarAccountBanCountLabel.Location = new System.Drawing.Point(607, 369);
+            this.similarAccountBanCountLabel.Location = new System.Drawing.Point(561, 369);
             this.similarAccountBanCountLabel.Name = "similarAccountBanCountLabel";
             this.similarAccountBanCountLabel.Size = new System.Drawing.Size(126, 20);
             this.similarAccountBanCountLabel.TabIndex = 67;
@@ -403,7 +403,7 @@ namespace steamPlayerInvestigator.Forms
             // 
             this.similarAccountDaysSinceLastBanLabel.AutoSize = true;
             this.similarAccountDaysSinceLastBanLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.similarAccountDaysSinceLastBanLabel.Location = new System.Drawing.Point(607, 404);
+            this.similarAccountDaysSinceLastBanLabel.Location = new System.Drawing.Point(561, 404);
             this.similarAccountDaysSinceLastBanLabel.Name = "similarAccountDaysSinceLastBanLabel";
             this.similarAccountDaysSinceLastBanLabel.Size = new System.Drawing.Size(150, 20);
             this.similarAccountDaysSinceLastBanLabel.TabIndex = 69;
@@ -438,7 +438,7 @@ namespace steamPlayerInvestigator.Forms
             // 
             // steamUserAvatar
             // 
-            this.steamUserAvatar.Location = new System.Drawing.Point(73, 44);
+            this.steamUserAvatar.Location = new System.Drawing.Point(68, 44);
             this.steamUserAvatar.Name = "steamUserAvatar";
             this.steamUserAvatar.Size = new System.Drawing.Size(75, 75);
             this.steamUserAvatar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -489,7 +489,7 @@ namespace steamPlayerInvestigator.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1649, 448);
+            this.ClientSize = new System.Drawing.Size(1684, 448);
             this.Controls.Add(this.steamUserAvatar);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -497,16 +497,16 @@ namespace steamPlayerInvestigator.Forms
             this.Controls.Add(this.steamUserDaysSinceLastBanLabel);
             this.Controls.Add(this.similarAccountBanCountLabel);
             this.Controls.Add(this.steamUserBanCountLabel);
-            this.Controls.Add(this.label36);
+            this.Controls.Add(this.similarityScoreLabel);
             this.Controls.Add(this.label35);
             this.Controls.Add(this.label34);
-            this.Controls.Add(this.label26);
+            this.Controls.Add(this.countryCodeLabel);
             this.Controls.Add(this.steamSimilarAccountCountryCodeLabel);
             this.Controls.Add(this.steamUserCountryCodeLabel);
-            this.Controls.Add(this.label23);
+            this.Controls.Add(this.clanIdLabel);
             this.Controls.Add(this.steamSimilarAccountClanLabel);
             this.Controls.Add(this.steamUserClanLabel);
-            this.Controls.Add(this.label20);
+            this.Controls.Add(this.timeCreatedLabel);
             this.Controls.Add(this.steamSimilarAccountCreatedLabel);
             this.Controls.Add(this.steamUserAccountCreatedLabel);
             this.Controls.Add(this.label17);
@@ -514,8 +514,8 @@ namespace steamPlayerInvestigator.Forms
             this.Controls.Add(this.steamUserStatusLabel);
             this.Controls.Add(this.steamSimilarAccountUrlLabel);
             this.Controls.Add(this.steamUserUrlLabel);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.label11);
+            this.Controls.Add(this.steamUrlLabel);
+            this.Controls.Add(this.steamNamesLabel);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -553,8 +553,8 @@ namespace steamPlayerInvestigator.Forms
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label steamNamesLabel;
+        private System.Windows.Forms.Label steamUrlLabel;
         private System.Windows.Forms.Label steamUserUrlLabel;
         private System.Windows.Forms.Label steamSimilarAccountUrlLabel;
         private System.Windows.Forms.Label steamUserStatusLabel;
@@ -562,17 +562,17 @@ namespace steamPlayerInvestigator.Forms
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label steamUserAccountCreatedLabel;
         private System.Windows.Forms.Label steamSimilarAccountCreatedLabel;
-        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label timeCreatedLabel;
         private System.Windows.Forms.Label steamUserClanLabel;
         private System.Windows.Forms.Label steamSimilarAccountClanLabel;
-        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label clanIdLabel;
         private System.Windows.Forms.Label steamUserCountryCodeLabel;
         private System.Windows.Forms.Label steamSimilarAccountCountryCodeLabel;
-        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label countryCodeLabel;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Label similarityScoreLabel;
         private System.Windows.Forms.Label steamUserBanCountLabel;
         private System.Windows.Forms.Label similarAccountBanCountLabel;
         private System.Windows.Forms.Label steamUserDaysSinceLastBanLabel;

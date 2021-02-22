@@ -397,11 +397,26 @@ namespace steamPlayerInvestigator
                     if(loopCount == 100)
                     {
                         response = await client.GetAsync(url);
-                        response.EnsureSuccessStatusCode();
+                        try
+                        {
+                            response.EnsureSuccessStatusCode();
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
                         string respFriendsSummary = await response.Content.ReadAsStringAsync();
                         tempSummary = JsonConvert.DeserializeObject<SummaryRoot>(respFriendsSummary);
 
                         response = await client.GetAsync(urlBan);
+                        try 
+                        {
+                            response.EnsureSuccessStatusCode();
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
                         response.EnsureSuccessStatusCode();
                         string respFriendsBan = await response.Content.ReadAsStringAsync();
                         tempBans = (JsonConvert.DeserializeObject<PlayerBansRoot>(respFriendsBan));
@@ -453,13 +468,27 @@ namespace steamPlayerInvestigator
                 if(loopCount != 0)
                 {
                     response = await client.GetAsync(url);
-                    response.EnsureSuccessStatusCode();
+                    try
+                    {
+                        response.EnsureSuccessStatusCode();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
                     string respFriendsSummary = await response.Content.ReadAsStringAsync();
                     tempSummary = JsonConvert.DeserializeObject<SummaryRoot>(respFriendsSummary);
                     url = "/ISteamUser/GetPlayerSummaries/v2/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=";
 
                     response = await client.GetAsync(urlBan);
-                    response.EnsureSuccessStatusCode();
+                    try
+                    {
+                        response.EnsureSuccessStatusCode();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
                     string respFriendsBan = await response.Content.ReadAsStringAsync();
                     tempBans = (JsonConvert.DeserializeObject<PlayerBansRoot>(respFriendsBan));
                     urlBan = "/ISteamUser/GetPlayerBans/v1/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=";
