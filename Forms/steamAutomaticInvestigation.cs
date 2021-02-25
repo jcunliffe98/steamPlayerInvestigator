@@ -154,7 +154,7 @@ namespace steamPlayerInvestigator.Forms
                     bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore - 5;
                 }
 
-              if(bannedPlayers[i].personastate == pSteamUser.personastate)
+                if(bannedPlayers[i].personastate == pSteamUser.personastate)
                 {
                     // Will need to adjust later
                     bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore - 10;
@@ -164,6 +164,15 @@ namespace steamPlayerInvestigator.Forms
                 {
                     bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore + 10;
                     bannedPlayers[i].onlineAtSameTime = false;
+                }
+
+                if (bannedPlayers[i].primaryclanid == pSteamUser.primaryclanid)
+                {
+                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore + 5;
+                }
+                else
+                {
+                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore - 5;
                 }
             }
 
@@ -296,54 +305,64 @@ namespace steamPlayerInvestigator.Forms
             similarAccountBanCountLabel.Text = "Number of bans: " + (sortedBannedPlayers[0].NumberOfGameBans + sortedBannedPlayers[0].NumberOfVACBans);
             similarAccountDaysSinceLastBanLabel.Text = "Days since last ban: " + sortedBannedPlayers[0].DaysSinceLastBan;
 
-            steamNamesLabel.Text = "Steam names are " + sortedBannedPlayers[0].levDistancePersona * 100 + "% similar";
+            steamNamesLabel.Text = "Steam names are " + Math.Round(sortedBannedPlayers[0].levDistancePersona * 100, 2) + "% similar";
 
             if(sortedBannedPlayers[0].levDistanceUrl == -1)
             {
                 steamUrlLabel.Text = "A user doesn't have a custom URL set so a comparison isn't possible";
+                steamNameEffectLabel.Text = "+" + (Math.Round(sortedBannedPlayers[0].levDistancePersona * 100, 2)).ToString();
             }
             else
             {
-                steamUrlLabel.Text = "Profile urls are " + sortedBannedPlayers[0].levDistanceUrl * 100 + "% similar";
+                steamUrlLabel.Text = "Profile urls are " + Math.Round(sortedBannedPlayers[0].levDistanceUrl) * 100 + "% similar";
+                steamNameEffectLabel.Text = "+" + Math.Round((sortedBannedPlayers[0].levDistancePersona + sortedBannedPlayers[0].levDistanceUrl) * 100).ToString();
             }
 
             if(pSteamUser.personastatestring == sortedBannedPlayers[0].personastatestring)
             {
                 timeCreatedLabel.Text = "Both users are" + pSteamUser.personastatestring + "at the same time";
+                steamStatusEffectLabel.Text = "-10";
             }
             else
             {
-                timeCreatedLabel.Text = "User is " + pSteamUser.personastatestring + " while similar account is " + sortedBannedPlayers[0].personastatestring; 
+                timeCreatedLabel.Text = "User is " + pSteamUser.personastatestring + " while similar account is " + sortedBannedPlayers[0].personastatestring;
+                steamStatusEffectLabel.Text = "+10";
             }
 
             if (sortedBannedPlayers[0].createdAfter == true)
             {
                 timeCreatedLabel.Text = "Similar account was created after user account";
+                steamTimeCreatedEffectLabel.Text = "+5";
             }
             else
             {
                 timeCreatedLabel.Text = "User account was created before similar account";
+                steamTimeCreatedEffectLabel.Text = "-5";
             }
 
             if(pSteamUser.primaryclanid == sortedBannedPlayers[0].primaryclanid)
             {
                 clanIdLabel.Text = "Primary clans are the same";
+                steamPrimaryClanEffectLabel.Text = "+5";
             }    
             else
             {
                 clanIdLabel.Text = "Primary clans are not the same";
+                steamPrimaryClanEffectLabel.Text = "-5";
             }
 
             if (pSteamUser.loccountrycode == sortedBannedPlayers[0].loccountrycode)
             {
                 countryCodeLabel.Text = "Both accounts share same country code";
+                steamCountryCodeEffectLabel.Text = "+5";
             }
             else
             {
                 countryCodeLabel.Text = "Both accounts don't share same country code";
+                steamCountryCodeEffectLabel.Text = "-5";
             }
 
-            similarityScoreLabel.Text = sortedBannedPlayers[0].similarityscore.ToString();
+            similarityScoreLabel.Text = "Overall Similarity Score: " + Math.Round(sortedBannedPlayers[0].similarityscore, 2);
 
             Console.ReadLine();
         }

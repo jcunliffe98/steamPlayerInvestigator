@@ -70,8 +70,13 @@ namespace steamPlayerInvestigator.Forms
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.steamNameEffectLabel = new System.Windows.Forms.Label();
+            this.steamStatusEffectLabel = new System.Windows.Forms.Label();
+            this.steamTimeCreatedEffectLabel = new System.Windows.Forms.Label();
+            this.steamPrimaryClanEffectLabel = new System.Windows.Forms.Label();
+            this.steamCountryCodeEffectLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.steamSimilarAccountAvatar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.steamUserAvatar)).BeginInit();
             this.SuspendLayout();
@@ -334,9 +339,9 @@ namespace steamPlayerInvestigator.Forms
             // label27
             // 
             this.label27.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label27.Location = new System.Drawing.Point(-12, 132);
+            this.label27.Location = new System.Drawing.Point(-12, 135);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(1673, 2);
+            this.label27.Size = new System.Drawing.Size(1705, 2);
             this.label27.TabIndex = 56;
             // 
             // label34
@@ -414,13 +419,13 @@ namespace steamPlayerInvestigator.Forms
             this.label33.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label33.Location = new System.Drawing.Point(-6, 314);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(1656, 10);
+            this.label33.Size = new System.Drawing.Size(1702, 10);
             this.label33.TabIndex = 71;
             // 
             // label4
             // 
             this.label4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label4.Location = new System.Drawing.Point(1543, -52);
+            this.label4.Location = new System.Drawing.Point(1580, -52);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(10, 607);
             this.label4.TabIndex = 72;
@@ -429,7 +434,7 @@ namespace steamPlayerInvestigator.Forms
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(1559, 6);
+            this.label5.Location = new System.Drawing.Point(1594, 6);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(78, 60);
             this.label5.TabIndex = 73;
@@ -448,48 +453,103 @@ namespace steamPlayerInvestigator.Forms
             // label2
             // 
             this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label2.Location = new System.Drawing.Point(-12, 165);
+            this.label2.Location = new System.Drawing.Point(-10, 166);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(1673, 2);
-            this.label2.TabIndex = 75;
+            this.label2.Size = new System.Drawing.Size(1594, 2);
+            this.label2.TabIndex = 80;
             // 
             // label3
             // 
             this.label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label3.Location = new System.Drawing.Point(-12, 194);
+            this.label3.Location = new System.Drawing.Point(-10, 195);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(1673, 2);
-            this.label3.TabIndex = 76;
+            this.label3.Size = new System.Drawing.Size(1705, 2);
+            this.label3.TabIndex = 81;
             // 
             // label8
             // 
             this.label8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label8.Location = new System.Drawing.Point(-12, 223);
+            this.label8.Location = new System.Drawing.Point(-10, 224);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(1673, 2);
-            this.label8.TabIndex = 77;
+            this.label8.Size = new System.Drawing.Size(1705, 2);
+            this.label8.TabIndex = 82;
             // 
-            // label13
+            // label11
             // 
-            this.label13.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label13.Location = new System.Drawing.Point(-4, 251);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(1673, 2);
-            this.label13.TabIndex = 78;
+            this.label11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label11.Location = new System.Drawing.Point(-10, 252);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(1705, 2);
+            this.label11.TabIndex = 83;
             // 
-            // label14
+            // label12
             // 
-            this.label14.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label14.Location = new System.Drawing.Point(-4, 281);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(1673, 2);
-            this.label14.TabIndex = 79;
+            this.label12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label12.Location = new System.Drawing.Point(-10, 281);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(1705, 2);
+            this.label12.TabIndex = 84;
+            // 
+            // steamNameEffectLabel
+            // 
+            this.steamNameEffectLabel.AutoSize = true;
+            this.steamNameEffectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.steamNameEffectLabel.Location = new System.Drawing.Point(1613, 156);
+            this.steamNameEffectLabel.Name = "steamNameEffectLabel";
+            this.steamNameEffectLabel.Size = new System.Drawing.Size(36, 20);
+            this.steamNameEffectLabel.TabIndex = 85;
+            this.steamNameEffectLabel.Text = "+10";
+            // 
+            // steamStatusEffectLabel
+            // 
+            this.steamStatusEffectLabel.AutoSize = true;
+            this.steamStatusEffectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.steamStatusEffectLabel.Location = new System.Drawing.Point(1613, 198);
+            this.steamStatusEffectLabel.Name = "steamStatusEffectLabel";
+            this.steamStatusEffectLabel.Size = new System.Drawing.Size(36, 20);
+            this.steamStatusEffectLabel.TabIndex = 87;
+            this.steamStatusEffectLabel.Text = "+10";
+            // 
+            // steamTimeCreatedEffectLabel
+            // 
+            this.steamTimeCreatedEffectLabel.AutoSize = true;
+            this.steamTimeCreatedEffectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.steamTimeCreatedEffectLabel.Location = new System.Drawing.Point(1613, 228);
+            this.steamTimeCreatedEffectLabel.Name = "steamTimeCreatedEffectLabel";
+            this.steamTimeCreatedEffectLabel.Size = new System.Drawing.Size(36, 20);
+            this.steamTimeCreatedEffectLabel.TabIndex = 88;
+            this.steamTimeCreatedEffectLabel.Text = "+10";
+            // 
+            // steamPrimaryClanEffectLabel
+            // 
+            this.steamPrimaryClanEffectLabel.AutoSize = true;
+            this.steamPrimaryClanEffectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.steamPrimaryClanEffectLabel.Location = new System.Drawing.Point(1613, 255);
+            this.steamPrimaryClanEffectLabel.Name = "steamPrimaryClanEffectLabel";
+            this.steamPrimaryClanEffectLabel.Size = new System.Drawing.Size(36, 20);
+            this.steamPrimaryClanEffectLabel.TabIndex = 89;
+            this.steamPrimaryClanEffectLabel.Text = "+10";
+            // 
+            // steamCountryCodeEffectLabel
+            // 
+            this.steamCountryCodeEffectLabel.AutoSize = true;
+            this.steamCountryCodeEffectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.steamCountryCodeEffectLabel.Location = new System.Drawing.Point(1613, 284);
+            this.steamCountryCodeEffectLabel.Name = "steamCountryCodeEffectLabel";
+            this.steamCountryCodeEffectLabel.Size = new System.Drawing.Size(36, 20);
+            this.steamCountryCodeEffectLabel.TabIndex = 90;
+            this.steamCountryCodeEffectLabel.Text = "+10";
             // 
             // steamAutomaticInvestigation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1684, 448);
+            this.Controls.Add(this.steamCountryCodeEffectLabel);
+            this.Controls.Add(this.steamPrimaryClanEffectLabel);
+            this.Controls.Add(this.steamTimeCreatedEffectLabel);
+            this.Controls.Add(this.steamStatusEffectLabel);
+            this.Controls.Add(this.steamNameEffectLabel);
             this.Controls.Add(this.steamUserAvatar);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -528,11 +588,11 @@ namespace steamPlayerInvestigator.Forms
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label27);
             this.Controls.Add(this.label33);
-            this.Controls.Add(this.label14);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label12);
             this.Name = "steamAutomaticInvestigation";
             this.Text = "Automatic Investigation";
             ((System.ComponentModel.ISupportInitialize)(this.steamSimilarAccountAvatar)).EndInit();
@@ -584,7 +644,12 @@ namespace steamPlayerInvestigator.Forms
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label steamNameEffectLabel;
+        private System.Windows.Forms.Label steamStatusEffectLabel;
+        private System.Windows.Forms.Label steamTimeCreatedEffectLabel;
+        private System.Windows.Forms.Label steamPrimaryClanEffectLabel;
+        private System.Windows.Forms.Label steamCountryCodeEffectLabel;
     }
 }
