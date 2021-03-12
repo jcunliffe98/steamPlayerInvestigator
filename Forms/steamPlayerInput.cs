@@ -158,11 +158,11 @@ namespace steamPlayerInvestigator
         private async Task getSteamInputAsync(string button)
         {
             string inputSteamId = inputTextBox.Text;
-            if(button == "manual")
+            if (button == "manual")
             {
                 await getManualSteamPlayerSummary(inputSteamId);
             }
-            else if(button == "automatic")
+            else if (button == "automatic")
             {
                 await getAutomaticSteamPlayerSummary(inputSteamId);
             }
@@ -357,7 +357,7 @@ namespace steamPlayerInvestigator
                                 }
                             }
                         }
-                            count++;
+                        count++;
                     }
                 }
             }
@@ -368,15 +368,15 @@ namespace steamPlayerInvestigator
             }
 
             SummaryRoot summaryFriends = steamUserFriendsSummary[0];
-            for(int a = 1; a < steamUserFriendsSummary.Count; a++)
+            for (int a = 1; a < steamUserFriendsSummary.Count; a++)
             {
-                for(int b = 0; b < steamUserFriendsSummary[a].response.players.Count; b++)
+                for (int b = 0; b < steamUserFriendsSummary[a].response.players.Count; b++)
                 {
                     summaryFriends.response.players.Add(steamUserFriendsSummary[a].response.players[b]);
                 }
             }
 
-            for(int a = 0; a < summaryFriends.response.players.Count; a++)
+            for (int a = 0; a < summaryFriends.response.players.Count; a++)
             {
                 url = "/ISteamUser/GetPlayerSummaries/v2/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=";
                 string urlBan = "/ISteamUser/GetPlayerBans/v1/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamids=";
@@ -388,13 +388,13 @@ namespace steamPlayerInvestigator
                 {
                     continue;
                 }
-                for(int b = 0; b < summaryFriends.response.players[a].friendsOfFriends.friendslist.friends.Count; b++)
+                for (int b = 0; b < summaryFriends.response.players[a].friendsOfFriends.friendslist.friends.Count; b++)
                 {
                     url += summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[b].steamid + "?";
                     urlBan += summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[b].steamid + "?";
                     loopCount++;
 
-                    if(loopCount == 100)
+                    if (loopCount == 100)
                     {
                         response = await client.GetAsync(url);
                         try
@@ -409,7 +409,7 @@ namespace steamPlayerInvestigator
                         tempSummary = JsonConvert.DeserializeObject<SummaryRoot>(respFriendsSummary);
 
                         response = await client.GetAsync(urlBan);
-                        try 
+                        try
                         {
                             response.EnsureSuccessStatusCode();
                         }
@@ -426,9 +426,9 @@ namespace steamPlayerInvestigator
 
                         for (int z = 0; z < tempSummary.response.players.Count; z++)
                         {
-                            for(int y = 0; y < summaryFriends.response.players[a].friendsOfFriends.friendslist.friends.Count; y++)
+                            for (int y = 0; y < summaryFriends.response.players[a].friendsOfFriends.friendslist.friends.Count; y++)
                             {
-                                if(tempSummary.response.players[z].steamid == summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].steamid)
+                                if (tempSummary.response.players[z].steamid == summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].steamid)
                                 {
                                     summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].communityvisibilitystate = tempSummary.response.players[z].communityvisibilitystate;
                                     summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].profilestate = tempSummary.response.players[z].profilestate;
@@ -449,7 +449,7 @@ namespace steamPlayerInvestigator
                         }
                         for (int z = 0; z < tempBans.players.Count; z++)
                         {
-                            for(int y = 0; y < summaryFriends.response.players[a].friendsOfFriends.friendslist.friends.Count; y++)
+                            for (int y = 0; y < summaryFriends.response.players[a].friendsOfFriends.friendslist.friends.Count; y++)
                             {
                                 if (tempBans.players[z].SteamId == summaryFriends.response.players[a].friendsOfFriends.friendslist.friends[y].steamid)
                                 {
@@ -465,7 +465,7 @@ namespace steamPlayerInvestigator
                         loopCount = 0;
                     }
                 }
-                if(loopCount != 0)
+                if (loopCount != 0)
                 {
                     response = await client.GetAsync(url);
                     try
@@ -534,8 +534,8 @@ namespace steamPlayerInvestigator
                 }
             }
 
-            steamAutomaticInvestigation steamAutomaticInvestigationForm = new steamAutomaticInvestigation(steamUser.response.players[0], steamUserBans.players[0], summaryFriends);
-            steamAutomaticInvestigationForm.Show();
+            steamAutomaticInvestigation steamAutomaticInvestigationForm = new steamAutomaticInvestigation();
+            await steamAutomaticInvestigationForm.Main(steamUser.response.players[0], steamUserBans.players[0], summaryFriends, client);
         }
 
         private async void automaticConfirmButton_ClickAsync(object sender, EventArgs e)
