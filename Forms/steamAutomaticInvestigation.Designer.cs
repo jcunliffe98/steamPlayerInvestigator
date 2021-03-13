@@ -77,6 +77,7 @@ namespace steamPlayerInvestigator.Forms
             this.steamTimeCreatedEffectLabel = new System.Windows.Forms.Label();
             this.steamPrimaryClanEffectLabel = new System.Windows.Forms.Label();
             this.steamCountryCodeEffectLabel = new System.Windows.Forms.Label();
+            this.saveInstanceButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.steamSimilarAccountAvatar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.steamUserAvatar)).BeginInit();
             this.SuspendLayout();
@@ -540,11 +541,22 @@ namespace steamPlayerInvestigator.Forms
             this.steamCountryCodeEffectLabel.TabIndex = 90;
             this.steamCountryCodeEffectLabel.Text = "+10";
             // 
+            // saveInstanceButton
+            // 
+            this.saveInstanceButton.Location = new System.Drawing.Point(1240, 369);
+            this.saveInstanceButton.Name = "saveInstanceButton";
+            this.saveInstanceButton.Size = new System.Drawing.Size(120, 23);
+            this.saveInstanceButton.TabIndex = 91;
+            this.saveInstanceButton.Text = "Save Locally";
+            this.saveInstanceButton.UseVisualStyleBackColor = true;
+            this.saveInstanceButton.Click += new System.EventHandler(this.saveInstanceButton_Click);
+            // 
             // steamAutomaticInvestigation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1684, 448);
+            this.Controls.Add(this.saveInstanceButton);
             this.Controls.Add(this.steamCountryCodeEffectLabel);
             this.Controls.Add(this.steamPrimaryClanEffectLabel);
             this.Controls.Add(this.steamTimeCreatedEffectLabel);
@@ -651,5 +663,6 @@ namespace steamPlayerInvestigator.Forms
         private System.Windows.Forms.Label steamTimeCreatedEffectLabel;
         private System.Windows.Forms.Label steamPrimaryClanEffectLabel;
         private System.Windows.Forms.Label steamCountryCodeEffectLabel;
+        private System.Windows.Forms.Button saveInstanceButton;
     }
 }
