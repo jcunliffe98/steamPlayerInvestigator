@@ -15,3 +15,4 @@ C:\3rd Year Project\Steam Investigator\steamPlayerInvestigator\steamPlayerInvest
 C:\3rd Year Project\Steam Investigator\steamPlayerInvestigator\steamPlayerInvestigator\obj\Debug\steamPlayerInvestigator.exe
 C:\3rd Year Project\Steam Investigator\steamPlayerInvestigator\steamPlayerInvestigator\obj\Debug\steamPlayerInvestigator.pdb
 C:\3rd Year Project\Steam Investigator\steamPlayerInvestigator\steamPlayerInvestigator\obj\Debug\steamPlayerInvestigator.csprojAssemblyReference.cache
+C:\3rd Year Project\Steam Investigator\steamPlayerInvestigator\steamPlayerInvestigator\obj\Debug\steamPlayerInvestigator.Forms.steamAutomaticInvestigationLocal.resources

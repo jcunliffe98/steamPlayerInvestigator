@@ -14,184 +14,48 @@ using System.IO;
 
 namespace steamPlayerInvestigator.Forms
 {
-    public partial class steamAutomaticInvestigation : Form
+    public partial class steamAutomaticInvestigationLocal : Form
     {
         Player steamUser { get; set; }
         PlayerBans steamUserBans { get; set; }
         SummaryRoot steamFriendsSummary { get; set; }
         List<Player> sortedBannedPlayers { get; set; }
+        Player highestScore { get; set; }
 
-        public steamAutomaticInvestigation()
+        public steamAutomaticInvestigationLocal()
         {
             InitializeComponent();
         }
 
-        public async Task Main(Player pSteamUser, PlayerBans pSteamUserBans, SummaryRoot pSteamFriendsSummary, HttpClient client)
+        public void Main(List<Player> pSteamUser, List<PlayerBans> pSteamUserBans, List<SummaryRoot> pSteamFriendsSummary, List<List<Player>> sortedBannedPlayers)
         {
-            steamUser = pSteamUser;
-            steamUserBans = pSteamUserBans;
-            steamFriendsSummary = pSteamFriendsSummary;
+            highestScore = new Player();
+            highestScore.similarityscore = 0;
 
-            steamUser.CommunityBanned = steamUserBans.CommunityBanned;
-            steamUser.DaysSinceLastBan = steamUserBans.DaysSinceLastBan;
-            steamUser.EconomyBan = steamUserBans.EconomyBan;
-            steamUser.NumberOfGameBans = steamUserBans.NumberOfGameBans;
-            steamUser.NumberOfVACBans = steamUserBans.NumberOfVACBans;
-            steamUser.VACBanned = steamUserBans.VACBanned;
-
-            List<Player> bannedPlayers = new List<Player>();
-            string shortUrlPlayer = "";
-            string shortUrlFriend;
-            bool shortUrlBool = false;
-            string[] steamUrlSplit;
-
-            if (steamUser.profileurl.Contains("id"))
+            for (int i = 0; i < pSteamUser.Count; i++)
             {
-                steamUrlSplit = steamUser.profileurl.Split('/');
-                shortUrlPlayer = steamUrlSplit[4];
-                shortUrlBool = true;
-            }
+                steamUser = pSteamUser[i];
+                steamUserBans = pSteamUserBans[i];
+                steamFriendsSummary = pSteamFriendsSummary[i];
+                List<Player> sortedBannedPlayersList = new List<Player>();
 
-            for (int i = 0; i < steamFriendsSummary.response.players.Count; i++)
-            {
-                if (steamFriendsSummary.response.players[i].VACBanned == true || steamFriendsSummary.response.players[i].NumberOfGameBans != 0)
+                sortedBannedPlayersList = sortedBannedPlayers[i];
+
+                steamUser.CommunityBanned = steamUserBans.CommunityBanned;
+                steamUser.DaysSinceLastBan = steamUserBans.DaysSinceLastBan;
+                steamUser.EconomyBan = steamUserBans.EconomyBan;
+                steamUser.NumberOfGameBans = steamUserBans.NumberOfGameBans;
+                steamUser.NumberOfVACBans = steamUserBans.NumberOfVACBans;
+                steamUser.VACBanned = steamUserBans.VACBanned;
+
+                for(int b = 0; b < sortedBannedPlayersList.Count; b++)
                 {
-                    bannedPlayers.Add(steamFriendsSummary.response.players[i]);
-                }
-                if (steamFriendsSummary.response.players[i].friendsOfFriends == null || steamFriendsSummary.response.players[i].friendsOfFriends.friendslist == null)
-                {
-                    continue;
-                }
-                for (int y = 0; y < steamFriendsSummary.response.players[i].friendsOfFriends.friendslist.friends.Count; y++)
-                {
-                    if (steamFriendsSummary.response.players[i].friendsOfFriends.friendslist.friends[y].VACBanned == true ||
-                        steamFriendsSummary.response.players[i].friendsOfFriends.friendslist.friends[y].NumberOfGameBans != 0)
+                    if(sortedBannedPlayersList[b].similarityscore > highestScore.similarityscore)
                     {
-                        Player tempPlayer = getPlayer(steamFriendsSummary, i, y);
-
-                        bannedPlayers.Add(tempPlayer);
+                        highestScore = sortedBannedPlayersList[b];
                     }
                 }
             }
-
-            bannedPlayers = removeDuplicates(bannedPlayers);
-
-            bannedPlayers = await getFriends(bannedPlayers, client);
-            bannedPlayers = checkFriends(bannedPlayers, steamFriendsSummary);
-
-            for (int i = 0; i < bannedPlayers.Count; i++)
-            {
-                if (bannedPlayers[i].steamid == steamUser.steamid)
-                {
-                    bannedPlayers.Remove(bannedPlayers[i]);
-                }
-                if (bannedPlayers[i].personaname == null)
-                {
-                    continue;
-                }
-                bannedPlayers[i].levDistancePersona = levenshteinPercentage(steamUser.personaname, bannedPlayers[i].personaname);
-                bannedPlayers[i].levDistanceUrl = -1;
-            }
-
-            if (shortUrlBool == true)
-            {
-                for (int i = 0; i < bannedPlayers.Count; i++)
-                {
-                    if (bannedPlayers[i].profileurl == null)
-                    {
-                        continue;
-                    }
-                    else if (bannedPlayers[i].profileurl.Contains(bannedPlayers[i].steamid))
-                    {
-                        bannedPlayers[i].levDistanceUrl = -1;
-                    }
-                    else
-                    {
-                        steamUrlSplit = bannedPlayers[i].profileurl.Split('/');
-                        shortUrlFriend = steamUrlSplit[4];
-                        if (bannedPlayers[i].profileurl == null)
-                        {
-                            continue;
-                        }
-                        bannedPlayers[i].levDistanceUrl = levenshteinPercentage(shortUrlPlayer, shortUrlFriend);
-                    }
-                }
-            }
-
-            for (int i = 0; i < bannedPlayers.Count; i++)
-            {
-                if (bannedPlayers[i].levDistanceUrl == -1)
-                {
-                    bannedPlayers[i].similarityscore = bannedPlayers[i].levDistancePersona;
-                }
-                else
-                {
-                    bannedPlayers[i].similarityscore = (bannedPlayers[i].levDistancePersona + bannedPlayers[i].levDistanceUrl) / 2;
-                }
-
-                bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore * 100;
-
-                if (bannedPlayers[i].timecreated == 0 || steamUser.timecreated == 0)
-                {
-                    continue;
-                }
-                else if (bannedPlayers[i].timecreated > steamUser.timecreated)
-                {
-                    bannedPlayers[i].createdAfter = true;
-
-                    // Will need to adjust later
-                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore + 5;
-                }
-                else
-                {
-                    bannedPlayers[i].createdAfter = false;
-
-                    // Will need to adjust later
-                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore - 5;
-                }
-
-                if (bannedPlayers[i].loccountrycode == null || steamUser.loccountrycode == null)
-                {
-                    continue;
-                }
-                else if (bannedPlayers[i].loccountrycode == steamUser.loccountrycode)
-                {
-                    bannedPlayers[i].sameCountry = true;
-
-                    // Will need to adjust later
-                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore + 5;
-                }
-                else
-                {
-                    bannedPlayers[i].sameCountry = false;
-
-                    // Will need to adjust later
-                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore - 5;
-                }
-
-                if (bannedPlayers[i].personastate == steamUser.personastate)
-                {
-                    // Will need to adjust later
-                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore - 10;
-                    bannedPlayers[i].onlineAtSameTime = true;
-                }
-                else
-                {
-                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore + 10;
-                    bannedPlayers[i].onlineAtSameTime = false;
-                }
-
-                if (bannedPlayers[i].primaryclanid == steamUser.primaryclanid)
-                {
-                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore + 5;
-                }
-                else
-                {
-                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore - 5;
-                }
-            }
-
-            sortedBannedPlayers = bannedPlayers.OrderByDescending(o => o.similarityscore).ToList();
 
             steamUserAvatar.ImageLocation = steamUser.avatarfull;
             steamUserNameLabel.Text = "Steam Name: " + steamUser.personaname;
@@ -257,94 +121,94 @@ namespace steamPlayerInvestigator.Forms
             steamUserBanCountLabel.Text = "Number of bans: " + (steamUser.NumberOfGameBans + steamUser.NumberOfVACBans);
             steamUserDaysSinceLastBanLabel.Text = "Days since last ban: " + steamUser.DaysSinceLastBan;
 
-            steamSimilarAccountAvatar.ImageLocation = sortedBannedPlayers[0].avatarfull;
-            steamSimilarAccountNameLabel.Text = "Steam Name: " + sortedBannedPlayers[0].personaname;
-            steamSimilarAccountUrlLabel.Text = "Profile Url: " + sortedBannedPlayers[0].profileurl;
+            steamSimilarAccountAvatar.ImageLocation = highestScore.avatarfull;
+            steamSimilarAccountNameLabel.Text = "Steam Name: " + highestScore.personaname;
+            steamSimilarAccountUrlLabel.Text = "Profile Url: " + highestScore.profileurl;
 
-            if (sortedBannedPlayers[0].personastate == 0)
+            if (highestScore.personastate == 0)
             {
-                sortedBannedPlayers[0].personastatestring = "Offline";
+                highestScore.personastatestring = "Offline";
                 steamSimilarAccountStatusLabel.Text = "Current Status: Offline";
             }
-            else if (sortedBannedPlayers[0].personastate == 1)
+            else if (highestScore.personastate == 1)
             {
-                sortedBannedPlayers[0].personastatestring = "Online";
+                highestScore.personastatestring = "Online";
                 steamSimilarAccountStatusLabel.Text = "Current Status: Online";
             }
-            else if (sortedBannedPlayers[0].personastate == 2)
+            else if (highestScore.personastate == 2)
             {
-                sortedBannedPlayers[0].personastatestring = "Busy";
+                highestScore.personastatestring = "Busy";
                 steamSimilarAccountStatusLabel.Text = "Current Status: Busy";
             }
-            else if (sortedBannedPlayers[0].personastate == 3)
+            else if (highestScore.personastate == 3)
             {
-                sortedBannedPlayers[0].personastatestring = "Away";
+                highestScore.personastatestring = "Away";
                 steamSimilarAccountStatusLabel.Text = "Current Status: Away";
             }
-            else if (sortedBannedPlayers[0].personastate == 4)
+            else if (highestScore.personastate == 4)
             {
-                sortedBannedPlayers[0].personastatestring = "Snooze";
+                highestScore.personastatestring = "Snooze";
                 steamSimilarAccountStatusLabel.Text = "Current Status: Snooze";
             }
-            else if (sortedBannedPlayers[0].personastate == 5)
+            else if (highestScore.personastate == 5)
             {
-                sortedBannedPlayers[0].personastatestring = "Looking to trade";
+                highestScore.personastatestring = "Looking to trade";
                 steamSimilarAccountStatusLabel.Text = "Current Status: Looking to trade";
             }
-            else if (sortedBannedPlayers[0].personastate == 6)
+            else if (highestScore.personastate == 6)
             {
-                sortedBannedPlayers[0].personastatestring = "Looking to play";
+                highestScore.personastatestring = "Looking to play";
                 steamSimilarAccountStatusLabel.Text = "Current Status: Looking to play";
             }
 
-            if (sortedBannedPlayers[0].timecreated == 0)
+            if (highestScore.timecreated == 0)
             {
                 steamSimilarAccountCreatedLabel.Text = "Account Created: Unknown";
             }
             else
             {
-                steamSimilarAccountCreatedLabel.Text = "Account Created: " + UnixTimeToDateTime(sortedBannedPlayers[0].timecreated);
+                steamSimilarAccountCreatedLabel.Text = "Account Created: " + UnixTimeToDateTime(highestScore.timecreated);
             }
 
-            steamSimilarAccountClanLabel.Text = "Primary Clan ID: " + sortedBannedPlayers[0].primaryclanid;
+            steamSimilarAccountClanLabel.Text = "Primary Clan ID: " + highestScore.primaryclanid;
 
-            if (sortedBannedPlayers[0].loccountrycode == "" || sortedBannedPlayers[0].loccountrycode == null)
+            if (highestScore.loccountrycode == "" || highestScore.loccountrycode == null)
             {
                 steamSimilarAccountCountryCodeLabel.Text = "Country Code: Unknown";
             }
             else
             {
-                steamSimilarAccountCountryCodeLabel.Text = "Country Code: " + sortedBannedPlayers[0].loccountrycode;
+                steamSimilarAccountCountryCodeLabel.Text = "Country Code: " + highestScore.loccountrycode;
             }
 
-            similarAccountBanCountLabel.Text = "Number of bans: " + (sortedBannedPlayers[0].NumberOfGameBans + sortedBannedPlayers[0].NumberOfVACBans);
-            similarAccountDaysSinceLastBanLabel.Text = "Days since last ban: " + sortedBannedPlayers[0].DaysSinceLastBan;
+            similarAccountBanCountLabel.Text = "Number of bans: " + (highestScore.NumberOfGameBans + highestScore.NumberOfVACBans);
+            similarAccountDaysSinceLastBanLabel.Text = "Days since last ban: " + highestScore.DaysSinceLastBan;
 
-            steamNamesLabel.Text = "Steam names are " + Math.Round(sortedBannedPlayers[0].levDistancePersona * 100, 2) + "% similar";
+            steamNamesLabel.Text = "Steam names are " + Math.Round(highestScore.levDistancePersona * 100, 2) + "% similar";
 
-            if (sortedBannedPlayers[0].levDistanceUrl == -1)
+            if (highestScore.levDistanceUrl == -1)
             {
                 steamUrlLabel.Text = "A user doesn't have a custom URL set so a comparison isn't possible";
-                steamNameEffectLabel.Text = "+" + (Math.Round(sortedBannedPlayers[0].levDistancePersona * 100, 2)).ToString();
+                steamNameEffectLabel.Text = "+" + (Math.Round(highestScore.levDistancePersona * 100, 2)).ToString();
             }
             else
             {
-                steamUrlLabel.Text = "Profile urls are " + Math.Round(sortedBannedPlayers[0].levDistanceUrl) * 100 + "% similar";
-                steamNameEffectLabel.Text = "+" + Math.Round((sortedBannedPlayers[0].levDistancePersona + sortedBannedPlayers[0].levDistanceUrl) * 100).ToString();
+                steamUrlLabel.Text = "Profile urls are " + Math.Round(highestScore.levDistanceUrl) * 100 + "% similar";
+                steamNameEffectLabel.Text = "+" + Math.Round((highestScore.levDistancePersona + highestScore.levDistanceUrl) * 100).ToString();
             }
 
-            if (steamUser.personastatestring == sortedBannedPlayers[0].personastatestring)
+            if (steamUser.personastatestring == highestScore.personastatestring)
             {
                 timeCreatedLabel.Text = "Both users are" + steamUser.personastatestring + "at the same time";
                 steamStatusEffectLabel.Text = "-10";
             }
             else
             {
-                timeCreatedLabel.Text = "User is " + steamUser.personastatestring + " while similar account is " + sortedBannedPlayers[0].personastatestring;
+                timeCreatedLabel.Text = "User is " + steamUser.personastatestring + " while similar account is " + highestScore.personastatestring;
                 steamStatusEffectLabel.Text = "+10";
             }
 
-            if (sortedBannedPlayers[0].createdAfter == true)
+            if (highestScore.createdAfter == true)
             {
                 timeCreatedLabel.Text = "Similar account was created after user account";
                 steamTimeCreatedEffectLabel.Text = "+5";
@@ -355,7 +219,7 @@ namespace steamPlayerInvestigator.Forms
                 steamTimeCreatedEffectLabel.Text = "-5";
             }
 
-            if (steamUser.primaryclanid == sortedBannedPlayers[0].primaryclanid)
+            if (steamUser.primaryclanid == highestScore.primaryclanid)
             {
                 clanIdLabel.Text = "Primary clans are the same";
                 steamPrimaryClanEffectLabel.Text = "+5";
@@ -366,7 +230,7 @@ namespace steamPlayerInvestigator.Forms
                 steamPrimaryClanEffectLabel.Text = "-5";
             }
 
-            if (steamUser.loccountrycode == sortedBannedPlayers[0].loccountrycode)
+            if (steamUser.loccountrycode == highestScore.loccountrycode)
             {
                 countryCodeLabel.Text = "Both accounts share same country code";
                 steamCountryCodeEffectLabel.Text = "+5";
@@ -377,53 +241,10 @@ namespace steamPlayerInvestigator.Forms
                 steamCountryCodeEffectLabel.Text = "-5";
             }
 
-            similarityScoreLabel.Text = "Overall Similarity Score: " + Math.Round(sortedBannedPlayers[0].similarityscore, 2);
+            similarityScoreLabel.Text = "Overall Similarity Score: " + Math.Round(highestScore.similarityscore, 2);
 
             Show();
             Console.ReadLine();
-        }
-
-        private List<Player> checkFriends(List<Player> bannedPlayers, SummaryRoot pSteamFriendsSummary)
-        {
-            for (int i = 0; i < bannedPlayers.Count; i++)
-            {
-                bannedPlayers[i].mutualFriendCount = 0;
-                if (bannedPlayers[i].friendsOfFriends == null)
-                {
-                    continue;
-                }
-                for (int y = 0; y < bannedPlayers[i].friendsOfFriends.friendslist.friends.Count; y++)
-                {
-                    for (int z = 0; z < pSteamFriendsSummary.response.players.Count; z++)
-                    {
-                        if (bannedPlayers[i].friendsOfFriends.friendslist.friends[y].steamid == pSteamFriendsSummary.response.players[z].steamid)
-                        {
-                            bannedPlayers[i].mutualFriendCount++;
-                        }
-                    }
-                }
-                bannedPlayers[i].mutualPercent = (double)bannedPlayers[i].mutualFriendCount / (double)pSteamFriendsSummary.response.players.Count;
-            }
-            return bannedPlayers;
-        }
-
-        public async Task<List<Player>> getFriends(List<Player> bannedPlayers, HttpClient client)
-        {
-            for (int i = 0; i < bannedPlayers.Count; i++)
-            {
-                string url = "/ISteamUser/GetFriendList/v1/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&steamid=" + bannedPlayers[i].steamid;
-                HttpResponseMessage response = await client.GetAsync(url);
-
-                FriendsRoot steamUserFriends = new FriendsRoot();
-
-                if (response.StatusCode.ToString() == "OK")
-                {
-                    string respFriends = await response.Content.ReadAsStringAsync();
-                    steamUserFriends = JsonConvert.DeserializeObject<FriendsRoot>(respFriends);
-                    bannedPlayers[i].friendsOfFriends = steamUserFriends;
-                }
-            }
-            return bannedPlayers;
         }
 
         public Player getPlayer(SummaryRoot pSteamFriendsSummary, int i, int y)
@@ -545,9 +366,8 @@ namespace steamPlayerInvestigator.Forms
             string steamUserJSON = JsonConvert.SerializeObject(steamUser);
             string steamUserBansJSON = JsonConvert.SerializeObject(steamUserBans);
             string steamUserFriendsSummaryJSON = JsonConvert.SerializeObject(steamFriendsSummary);
-            string sortedBannedPlayerJSON = JsonConvert.SerializeObject(sortedBannedPlayers);
 
-            string[] text = { "Steam User:", steamUserJSON, "Steam User Bans:",  steamUserBansJSON, "Steam User Friends Summary:", steamUserFriendsSummaryJSON, "Sorted Banned Players:", sortedBannedPlayerJSON };
+            string[] text = { "Steam User:", steamUserJSON, "Steam User Bans:",  steamUserBansJSON, "Steam User Friends Summary:", steamUserFriendsSummaryJSON };
 
             string currentTime = DateTime.Now.ToString("MM/dd/yyyy h:mm tt");
 

@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using steamPlayerInvestigator.Forms;
+using System.IO;
 
 namespace steamPlayerInvestigator
 {
@@ -542,6 +543,95 @@ namespace steamPlayerInvestigator
         {
             string button = "automatic";
             await getSteamInputAsync(button);
+        }
+
+        private async void button1_ClickAsync(object sender, EventArgs e)
+        {
+            HttpClient client = getClient();
+            List<Player> steamPlayerInstances = new List<Player>();
+            List<PlayerBans> steamPlayerBansInstaces = new List<PlayerBans>();
+            List<SummaryRoot> steamSummaryInstances = new List<SummaryRoot>();
+            List<List<Player>> sortedBannedPlayerInstances = new List<List<Player>>();
+
+            string steamId = inputTextBox.Text;
+
+            if (steamId.Contains("https://steamcommunity.com/id/"))
+            {
+                string[] steamUrlSplit = steamId.Split('/');
+                string steamVanityUrl = "/ISteamUser/ResolveVanityURL/v1/?key=CF1AEABEB295AA2047B7D3BDFFE95DBE&vanityurl=" + steamUrlSplit[4];
+                HttpResponseMessage steamIdResponse = await client.GetAsync(steamVanityUrl);
+                steamIdResponse.EnsureSuccessStatusCode();
+
+                string urlResponse;
+                urlResponse = await steamIdResponse.Content.ReadAsStringAsync();
+                UrlRoot foundSteamId = JsonConvert.DeserializeObject<UrlRoot>(urlResponse);
+                steamId = foundSteamId.response.steamid;
+
+                if (foundSteamId.response.success != 1)
+                {
+                    MessageBox.Show("Steam URL not found");
+                    inputTextBox.Clear();
+                    return;
+                }
+            }
+            else if (steamId.Contains("https://steamcommunity.com/profiles/"))
+            {
+                string[] steamUrlSplit = steamId.Split('/');
+                steamId = steamUrlSplit[4];
+            }
+
+            using (StreamReader inputFile = new StreamReader(steamId + ".txt"))
+            {
+
+                string nextLine = "";
+
+                while (inputFile.Peek() >= 0)
+                {
+                    string lineContents = inputFile.ReadLine();
+
+                    if(lineContents.Contains("Steam User:"))
+                    {
+                        nextLine = "Steam User";
+                    }
+                    else if(nextLine == "Steam User")
+                    {
+                        steamPlayerInstances.Add(JsonConvert.DeserializeObject<Player>(lineContents));
+                        nextLine = "";
+                    }
+
+                    else if (lineContents.Contains("Steam User Bans:"))
+                    {
+                        nextLine = "Steam User Bans";
+                    }
+                    else if (nextLine == "Steam User Bans")
+                    {
+                        steamPlayerBansInstaces.Add(JsonConvert.DeserializeObject<PlayerBans>(lineContents));
+                        nextLine = "";
+                    }
+
+                    else if (lineContents.Contains("Steam User Friends Summary:"))
+                    {
+                        nextLine = "Steam User Friends Summary";
+                    }
+                    else if (nextLine == "Steam User Friends Summary")
+                    {
+                        steamSummaryInstances.Add(JsonConvert.DeserializeObject<SummaryRoot>(lineContents));
+                        nextLine = "";
+                    }
+
+                    else if (lineContents.Contains("Sorted Banned Players:"))
+                    {
+                        nextLine = "Sorted Banned Players";
+                    }
+                    else if(nextLine == "Sorted Banned Players")
+                    {
+                        sortedBannedPlayerInstances.Add(JsonConvert.DeserializeObject<List<Player>>(lineContents));
+                    }
+                }
+            }
+
+            steamAutomaticInvestigationLocal steamAutomaticInvestigationForm = new steamAutomaticInvestigationLocal();
+            steamAutomaticInvestigationForm.Main(steamPlayerInstances, steamPlayerBansInstaces, steamSummaryInstances, sortedBannedPlayerInstances);
         }
     }
 }
