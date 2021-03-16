@@ -13,6 +13,8 @@ namespace steamPlayerInvestigator
         public double mutualPercent { get; set; }
         public string personastatestring { get; set; }
         public double similarityscore { get; set; }
+
+        public double similarityscoreaverage { get; set; }
         public int communityvisibilitystate { get; set; }
         public int profilestate { get; set; }
         public string personaname { get; set; }
