@@ -124,6 +124,31 @@ namespace steamPlayerInvestigator.Forms
                 steamUserAccountLogoffLabel.Text = "Average Logoff Time: " + steamUser.averageLogOffLocal.ToString();
             }
 
+
+
+            userLogOffs.Clear();
+
+            for(int i = 0; i < playerInstances.Count; i++)
+            {
+                totalTimeSeconds = 0;
+                for(int a = 0; a < playerInstances[i].Count; a++)
+                {
+                    averageLogOffUser = UnixTimeToDateTime(playerInstances[i][a].lastlogoff);
+                    string temp = averageLogOffUser.ToString("HH:mm");
+                    double seconds = TimeSpan.Parse(temp).TotalSeconds;
+                    userLogOffs.Add(seconds);
+                    totalTimeSeconds += seconds;
+                }
+                averageTimeSeconds = totalTimeSeconds / playerInstances[i].Count;
+                averageTimeSeconds = Math.Round(averageTimeSeconds);
+                timeUserLogOff = TimeSpan.FromSeconds(averageTimeSeconds);
+                userLogOffs.Clear();
+                for (int a = 0; a < playerInstances[i].Count; a++)
+                {
+                    playerInstances[i][a].averageLogOffLocal = timeUserLogOff;
+                }
+            }
+
             for (int i = 0; i < pSteamUser.Count; i++)
             {
                 List<Player> sortedBannedPlayersList = new List<Player>();
@@ -138,11 +163,19 @@ namespace steamPlayerInvestigator.Forms
                     }
                 }
             }
-
             steamUserAvatar.ImageLocation = steamUser.avatarfull;
             steamUserNameLabel.Text = "Steam Name: " + steamUser.personaname;
             steamUserUrlLabel.Text = "Profile Url: " + steamUser.profileurl;
             steamSimilarAccountUrlLabel.Text = "Profile Url: " + steamUser.profileurl;
+
+            if (highestScore.averageLogOffLocal.ToString() == "00:00:00")
+            {
+                mostSimilarAccountLogoffLabel.Text = "Average Logoff Time: Unavailable";
+            }
+            else
+            {
+                mostSimilarAccountLogoffLabel.Text = "Average Logoff Time: " + highestScore.averageLogOffLocal.ToString();
+            }
 
             if (steamUser.personastate == 0)
             {
@@ -329,6 +362,9 @@ namespace steamPlayerInvestigator.Forms
             }
 
             similarityScoreLabel.Text = "Overall Similarity Score: " + Math.Round(highestScore.similarityscore, 2);
+            instanceCountLabel.Text = "Number of local instances: " + pSteamUser.Count;
+            highestScore.mutualPercent = highestScore.mutualPercent * 100;
+            mostSimilarAccountFriendSimilarityLabel.Text = "Friend Similarity: " + Math.Round(highestScore.mutualPercent).ToString() + "%";
 
             Show();
             Console.ReadLine();
@@ -423,5 +459,52 @@ namespace steamPlayerInvestigator.Forms
             newDateTime = newDateTime.AddSeconds(unixtime).ToLocalTime();
             return newDateTime;
         }
+        private List<Player> checkFriendsSimilarAccount(List<Player> bannedPlayers, SummaryRoot pSteamFriendsSummary)
+        {
+            for (int i = 0; i < bannedPlayers.Count; i++)
+            {
+                bannedPlayers[i].mutualFriendCount = 0;
+                if (bannedPlayers[i].friendsOfFriends == null)
+                {
+                    continue;
+                }
+                for (int y = 0; y < bannedPlayers[i].friendsOfFriends.friendslist.friends.Count; y++)
+                {
+                    for (int z = 0; z < pSteamFriendsSummary.response.players.Count; z++)
+                    {
+                        if (bannedPlayers[i].friendsOfFriends.friendslist.friends[y].steamid == pSteamFriendsSummary.response.players[z].steamid)
+                        {
+                            bannedPlayers[i].mutualFriendCount++;
+                        }
+                    }
+                }
+                bannedPlayers[i].mutualPercent = (double)bannedPlayers[i].mutualFriendCount / (double)pSteamFriendsSummary.response.players.Count;
+            }
+            return bannedPlayers;
+        }
+
+        //private List<Player> checkFriendsSteamUser(Player pMostSimilarAccount, List<SummaryRoot> pSteamFriendsSummary)
+        //{
+            //for (int i = 0; i < pMostSimilarAccount.friendsOfFriends.friendslist.friends.Count; i++)
+            //{
+                //pMostSimilarAccount.mutualFriendCount = 0;
+                //if (pMostSimilarAccount.friendsOfFriends == null)
+                //{
+                    //break;
+                //}
+                //for (int y = 0; y < pSteamFriendsSummary.Count; y++)
+                //{
+                    //for (int z = 0; z < pSteamFriendsSummary[y].response.players.Count; z++)
+                    //{
+                        //if (pSteamFriendsSummary[i].response.players[y].friendsOfFriends == pSteamFriendsSummary.response.players[z].steamid)
+                        //{
+                            //bannedPlayers[i].mutualFriendCount++;
+                        //}
+                    //}
+                //}
+                //bannedPlayers[i].mutualPercent = (double)bannedPlayers[i].mutualFriendCount / (double)pSteamFriendsSummary.response.players.Count;
+            //}
+            //return bannedPlayers;
+        //}
     }
 }

@@ -80,6 +80,10 @@ namespace steamPlayerInvestigator.Forms
             this.label13 = new System.Windows.Forms.Label();
             this.steamUserAccountLogoffLabel = new System.Windows.Forms.Label();
             this.mostSimilarAccountLogoffLabel = new System.Windows.Forms.Label();
+            this.instanceCountLabel = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.steamUserFriendSimilarityLabel = new System.Windows.Forms.Label();
+            this.mostSimilarAccountFriendSimilarityLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.steamSimilarAccountAvatar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.steamUserAvatar)).BeginInit();
             this.SuspendLayout();
@@ -420,7 +424,7 @@ namespace steamPlayerInvestigator.Forms
             // label33
             // 
             this.label33.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label33.Location = new System.Drawing.Point(-7, 339);
+            this.label33.Location = new System.Drawing.Point(-7, 374);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(1702, 10);
             this.label33.TabIndex = 71;
@@ -571,14 +575,54 @@ namespace steamPlayerInvestigator.Forms
             this.mostSimilarAccountLogoffLabel.TabIndex = 93;
             this.mostSimilarAccountLogoffLabel.Text = "Average Logoff Time:";
             // 
+            // instanceCountLabel
+            // 
+            this.instanceCountLabel.AutoSize = true;
+            this.instanceCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.instanceCountLabel.Location = new System.Drawing.Point(1089, 407);
+            this.instanceCountLabel.Name = "instanceCountLabel";
+            this.instanceCountLabel.Size = new System.Drawing.Size(225, 20);
+            this.instanceCountLabel.TabIndex = 94;
+            this.instanceCountLabel.Text = "Numbers of local instances";
+            // 
+            // label14
+            // 
+            this.label14.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label14.Location = new System.Drawing.Point(-10, 341);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(1705, 2);
+            this.label14.TabIndex = 95;
+            // 
+            // steamUserFriendSimilarityLabel
+            // 
+            this.steamUserFriendSimilarityLabel.AutoSize = true;
+            this.steamUserFriendSimilarityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.steamUserFriendSimilarityLabel.Location = new System.Drawing.Point(1, 345);
+            this.steamUserFriendSimilarityLabel.Name = "steamUserFriendSimilarityLabel";
+            this.steamUserFriendSimilarityLabel.Size = new System.Drawing.Size(124, 20);
+            this.steamUserFriendSimilarityLabel.TabIndex = 96;
+            this.steamUserFriendSimilarityLabel.Text = "Friend Similarity:";
+            // 
+            // mostSimilarAccountFriendSimilarityLabel
+            // 
+            this.mostSimilarAccountFriendSimilarityLabel.AutoSize = true;
+            this.mostSimilarAccountFriendSimilarityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.mostSimilarAccountFriendSimilarityLabel.Location = new System.Drawing.Point(559, 345);
+            this.mostSimilarAccountFriendSimilarityLabel.Name = "mostSimilarAccountFriendSimilarityLabel";
+            this.mostSimilarAccountFriendSimilarityLabel.Size = new System.Drawing.Size(124, 20);
+            this.mostSimilarAccountFriendSimilarityLabel.TabIndex = 97;
+            this.mostSimilarAccountFriendSimilarityLabel.Text = "Friend Similarity:";
+            // 
             // steamAutomaticInvestigationLocal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1684, 496);
+            this.Controls.Add(this.mostSimilarAccountFriendSimilarityLabel);
+            this.Controls.Add(this.steamUserFriendSimilarityLabel);
+            this.Controls.Add(this.instanceCountLabel);
             this.Controls.Add(this.mostSimilarAccountLogoffLabel);
             this.Controls.Add(this.steamUserAccountLogoffLabel);
-            this.Controls.Add(this.label13);
             this.Controls.Add(this.steamCountryCodeEffectLabel);
             this.Controls.Add(this.steamPrimaryClanEffectLabel);
             this.Controls.Add(this.steamTimeCreatedEffectLabel);
@@ -627,6 +671,8 @@ namespace steamPlayerInvestigator.Forms
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label12);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label14);
             this.Name = "steamAutomaticInvestigationLocal";
             this.Text = "Automatic Investigation";
             ((System.ComponentModel.ISupportInitialize)(this.steamSimilarAccountAvatar)).EndInit();
@@ -688,5 +734,9 @@ namespace steamPlayerInvestigator.Forms
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label steamUserAccountLogoffLabel;
         private System.Windows.Forms.Label mostSimilarAccountLogoffLabel;
+        private System.Windows.Forms.Label instanceCountLabel;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label steamUserFriendSimilarityLabel;
+        private System.Windows.Forms.Label mostSimilarAccountFriendSimilarityLabel;
     }
 }
