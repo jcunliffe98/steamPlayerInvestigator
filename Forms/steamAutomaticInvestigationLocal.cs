@@ -20,6 +20,9 @@ namespace steamPlayerInvestigator.Forms
         PlayerBans steamUserBans { get; set; }
         SummaryRoot steamFriendsSummary { get; set; }
         List<Player> sortedBannedPlayers { get; set; }
+        List<List<Player>> playerInstances { get; set; }
+
+        List<string> uniqueSteamIds { get; set; }
         Player highestScore { get; set; }
 
         public steamAutomaticInvestigationLocal()
@@ -32,21 +35,100 @@ namespace steamPlayerInvestigator.Forms
             highestScore = new Player();
             highestScore.similarityscore = 0;
 
+            playerInstances = new List<List<Player>>();
+
+            uniqueSteamIds = new List<string>();
+
+            // Gets all unique ids and puts them in a list
+            for(int i = 0; i < sortedBannedPlayers.Count; i++)
+            {
+                for(int a = 0; a < sortedBannedPlayers[i].Count; a++)
+                {
+                    if(uniqueSteamIds.Contains(sortedBannedPlayers[i][a].steamid))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        uniqueSteamIds.Add(sortedBannedPlayers[i][a].steamid);
+                    }
+                }
+            }
+
+            List<Player> bannedPlayersSingleList = new List<Player>();
+
+            for (int i = 0; i < sortedBannedPlayers.Count; i++)
+            {
+                for (int a = 0; a < sortedBannedPlayers[i].Count; a++)
+                {
+                    bannedPlayersSingleList.Add(sortedBannedPlayers[i][a]);
+                }
+            }
+
+            if (sortedBannedPlayers.Count == 1)
+            {
+                for(int i = 0; i < bannedPlayersSingleList.Count; i++)
+                {
+                    List<Player> tempList = new List<Player>();
+                    tempList.Add(bannedPlayersSingleList[i]);
+                    playerInstances.Add(tempList);
+                }
+            }
+            else
+            {
+                for (int a = 0; a < uniqueSteamIds.Count; a++)
+                {
+                    List<Player> tempList = new List<Player>();
+                    for (int i = 0; i < bannedPlayersSingleList.Count; i++)
+                    {
+                        if(uniqueSteamIds[a] == bannedPlayersSingleList[i].steamid)
+                        {
+                            tempList.Add(bannedPlayersSingleList[i]);
+                        }
+                    }
+                    playerInstances.Add(tempList);
+                }
+            }
+
+            DateTime averageLogOffUser;
+            List<double> userLogOffs = new List<double>();
+
             for (int i = 0; i < pSteamUser.Count; i++)
             {
-                steamUser = pSteamUser[i];
-                steamUserBans = pSteamUserBans[i];
-                steamFriendsSummary = pSteamFriendsSummary[i];
+                averageLogOffUser = UnixTimeToDateTime(pSteamUser[i].lastlogoff);
+                string temp = averageLogOffUser.ToString("HH:mm");
+                double seconds = TimeSpan.Parse(temp).TotalSeconds;
+                userLogOffs.Add(seconds);
+            }
+
+            double totalTimeSeconds = 0;
+
+            for(int i = 0; i < userLogOffs.Count; i++)
+            {
+                totalTimeSeconds += userLogOffs[i];
+            }
+
+            double averageTimeSeconds = totalTimeSeconds / userLogOffs.Count;
+            averageTimeSeconds = Math.Round(averageTimeSeconds);
+            TimeSpan timeUserLogOff = TimeSpan.FromSeconds(averageTimeSeconds);
+
+            steamUser = pSteamUser[pSteamUser.Count - 1];
+            steamUser.averageLogOffLocal = timeUserLogOff;
+
+            if(averageTimeSeconds == 0)
+            {
+                steamUserAccountLogoffLabel.Text = "Average Logoff Time: Unavailable";
+            }
+            else
+            {
+                steamUserAccountLogoffLabel.Text = "Average Logoff Time: " + steamUser.averageLogOffLocal.ToString();
+            }
+
+            for (int i = 0; i < pSteamUser.Count; i++)
+            {
                 List<Player> sortedBannedPlayersList = new List<Player>();
 
                 sortedBannedPlayersList = sortedBannedPlayers[i];
-
-                steamUser.CommunityBanned = steamUserBans.CommunityBanned;
-                steamUser.DaysSinceLastBan = steamUserBans.DaysSinceLastBan;
-                steamUser.EconomyBan = steamUserBans.EconomyBan;
-                steamUser.NumberOfGameBans = steamUserBans.NumberOfGameBans;
-                steamUser.NumberOfVACBans = steamUserBans.NumberOfVACBans;
-                steamUser.VACBanned = steamUserBans.VACBanned;
 
                 for(int b = 0; b < sortedBannedPlayersList.Count; b++)
                 {
@@ -199,12 +281,12 @@ namespace steamPlayerInvestigator.Forms
 
             if (steamUser.personastatestring == highestScore.personastatestring)
             {
-                timeCreatedLabel.Text = "Both users are" + steamUser.personastatestring + "at the same time";
+                label17.Text = "Both users are " + steamUser.personastatestring + " at the same time";
                 steamStatusEffectLabel.Text = "-10";
             }
             else
             {
-                timeCreatedLabel.Text = "User is " + steamUser.personastatestring + " while similar account is " + highestScore.personastatestring;
+                label17.Text = "User is " + steamUser.personastatestring + " while similar account is " + highestScore.personastatestring;
                 steamStatusEffectLabel.Text = "+10";
             }
 
@@ -230,7 +312,12 @@ namespace steamPlayerInvestigator.Forms
                 steamPrimaryClanEffectLabel.Text = "-5";
             }
 
-            if (steamUser.loccountrycode == highestScore.loccountrycode)
+            if (steamUser.loccountrycode == null || highestScore.loccountrycode == null)
+            {
+                countryCodeLabel.Text = "Comparison can't be made";
+                steamCountryCodeEffectLabel.Text = "0";
+            }
+            else if (steamUser.loccountrycode == highestScore.loccountrycode)
             {
                 countryCodeLabel.Text = "Both accounts share same country code";
                 steamCountryCodeEffectLabel.Text = "+5";
@@ -330,72 +417,11 @@ namespace steamPlayerInvestigator.Forms
             return lengthArray[playerNameLength, friendNameLength];
         }
 
-
-
-        public List<Player> removeDuplicates(List<Player> bannedPlayers)
-        {
-            List<Player> removedDuplicatesBannedPlayers = new List<Player>();
-            for (int i = 0; i < bannedPlayers.Count; i++)
-            {
-                bool duplicateFound = false;
-                for (int y = 0; y < i; y++)
-                {
-                    if (bannedPlayers[i].steamid == bannedPlayers[y].steamid)
-                    {
-                        duplicateFound = true;
-                        break;
-                    }
-                }
-                if (!duplicateFound)
-                {
-                    removedDuplicatesBannedPlayers.Add(bannedPlayers[i]);
-                }
-            }
-            return removedDuplicatesBannedPlayers;
-        }
-
         static public DateTime UnixTimeToDateTime(long unixtime)
         {
             DateTime newDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             newDateTime = newDateTime.AddSeconds(unixtime).ToLocalTime();
             return newDateTime;
-        }
-
-        private void saveInstanceButton_Click(object sender, EventArgs e)
-        {
-            string steamUserJSON = JsonConvert.SerializeObject(steamUser);
-            string steamUserBansJSON = JsonConvert.SerializeObject(steamUserBans);
-            string steamUserFriendsSummaryJSON = JsonConvert.SerializeObject(steamFriendsSummary);
-
-            string[] text = { "Steam User:", steamUserJSON, "Steam User Bans:",  steamUserBansJSON, "Steam User Friends Summary:", steamUserFriendsSummaryJSON };
-
-            string currentTime = DateTime.Now.ToString("MM/dd/yyyy h:mm tt");
-
-            string path = AppDomain.CurrentDomain.BaseDirectory;
-            path = path + steamUser.steamid + ".txt";
-            if (File.Exists(path) == true)
-            {
-                using (StreamWriter outputFile = new StreamWriter(steamUser.steamid + ".txt", true))
-                {
-                    outputFile.WriteLine("");
-                    outputFile.WriteLine("[" + currentTime + "]");
-                    foreach (string line in text)
-                        outputFile.WriteLine(line);
-                }
-            }
-            else
-            {
-
-                using (StreamWriter outputFile = new StreamWriter(steamUser.steamid + ".txt"))
-                {
-                    outputFile.WriteLine("[" + currentTime + "]");
-                    foreach (string line in text)
-                        outputFile.WriteLine(line);
-                }
-            }
-
-            saveInstanceButton.Enabled = false;
-            MessageBox.Show("Save Successful");
         }
     }
 }

@@ -626,6 +626,7 @@ namespace steamPlayerInvestigator
                     else if(nextLine == "Sorted Banned Players")
                     {
                         sortedBannedPlayerInstances.Add(JsonConvert.DeserializeObject<List<Player>>(lineContents));
+                        nextLine = "Date";
                     }
                 }
             }

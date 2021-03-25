@@ -152,7 +152,7 @@ namespace steamPlayerInvestigator.Forms
 
                 if (bannedPlayers[i].loccountrycode == null || steamUser.loccountrycode == null)
                 {
-                    continue;
+                    bannedPlayers[i].sameCountry = false;
                 }
                 else if (bannedPlayers[i].loccountrycode == steamUser.loccountrycode)
                 {
@@ -169,7 +169,11 @@ namespace steamPlayerInvestigator.Forms
                     bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore - 5;
                 }
 
-                if (bannedPlayers[i].personastate == steamUser.personastate)
+                if(bannedPlayers[i].personastate == 0 && steamUser.personastate == 0)
+                {
+                    bannedPlayers[i].onlineAtSameTime = false;
+                }
+                else if (bannedPlayers[i].personastate == steamUser.personastate)
                 {
                     // Will need to adjust later
                     bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore - 10;
@@ -333,14 +337,19 @@ namespace steamPlayerInvestigator.Forms
                 steamNameEffectLabel.Text = "+" + Math.Round((sortedBannedPlayers[0].levDistancePersona + sortedBannedPlayers[0].levDistanceUrl) * 100).ToString();
             }
 
-            if (steamUser.personastatestring == sortedBannedPlayers[0].personastatestring)
+            if(steamUser.personastatestring == "Offline" && sortedBannedPlayers[0].personastatestring == "Offline")
             {
-                timeCreatedLabel.Text = "Both users are" + steamUser.personastatestring + "at the same time";
+                label17.Text = "Both users are " + steamUser.personastatestring + " at the same time";
+                steamStatusEffectLabel.Text = "0";
+            }
+            else if (steamUser.personastatestring == sortedBannedPlayers[0].personastatestring)
+            {
+                label17.Text = "Both users are " + steamUser.personastatestring + " at the same time";
                 steamStatusEffectLabel.Text = "-10";
             }
             else
             {
-                timeCreatedLabel.Text = "User is " + steamUser.personastatestring + " while similar account is " + sortedBannedPlayers[0].personastatestring;
+                label17.Text = "User is " + steamUser.personastatestring + " while similar account is " + sortedBannedPlayers[0].personastatestring;
                 steamStatusEffectLabel.Text = "+10";
             }
 
@@ -366,7 +375,12 @@ namespace steamPlayerInvestigator.Forms
                 steamPrimaryClanEffectLabel.Text = "-5";
             }
 
-            if (steamUser.loccountrycode == sortedBannedPlayers[0].loccountrycode)
+            if (steamUser.loccountrycode == null || sortedBannedPlayers[0].loccountrycode == null)
+            {
+                countryCodeLabel.Text = "Comparison can't be made";
+                steamCountryCodeEffectLabel.Text = "0";
+            }
+            else if (steamUser.loccountrycode == sortedBannedPlayers[0].loccountrycode)
             {
                 countryCodeLabel.Text = "Both accounts share same country code";
                 steamCountryCodeEffectLabel.Text = "+5";
