@@ -10,7 +10,8 @@ namespace steamPlayerInvestigator
     {
         public string steamid { get; set; }
         public int mutualFriendCount { get; set; }
-        public double mutualPercent { get; set; }
+        public double mutualPercentAgainstUser { get; set; }
+        public double mutualPercentAgainstSelf { get; set; }
         public string personastatestring { get; set; }
         public double similarityscore { get; set; }
 

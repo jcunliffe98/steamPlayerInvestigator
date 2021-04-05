@@ -133,7 +133,6 @@ namespace steamPlayerInvestigator.Forms
 
                 if (bannedPlayers[i].timecreated == 0 || steamUser.timecreated == 0)
                 {
-                    continue;
                 }
                 else if (bannedPlayers[i].timecreated > steamUser.timecreated)
                 {
@@ -185,7 +184,10 @@ namespace steamPlayerInvestigator.Forms
                     bannedPlayers[i].onlineAtSameTime = false;
                 }
 
-                if (bannedPlayers[i].primaryclanid == steamUser.primaryclanid)
+                if(bannedPlayers[i].primaryclanid == null || steamUser.primaryclanid == null)
+                {
+                }
+                else if (bannedPlayers[i].primaryclanid == steamUser.primaryclanid)
                 {
                     bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore + 5;
                 }
@@ -193,6 +195,27 @@ namespace steamPlayerInvestigator.Forms
                 {
                     bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore - 5;
                 }
+
+                if (steamUser.lastlogoff == 0 || bannedPlayers[i].lastlogoff == 0)
+                {
+                }
+                else
+                {
+                    DateTime steamUserLogOff = UnixTimeToDateTime(steamUser.lastlogoff);
+                    DateTime bannedUserLogOff = UnixTimeToDateTime(bannedPlayers[i].lastlogoff);
+                    int hours = (steamUserLogOff - bannedUserLogOff).Hours;
+                    if (hours == 0)
+                    {
+                        bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore + 10;
+                    }
+                    else
+                    {
+                        bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore - 10;
+                    }
+                }
+
+              double average = Math.Round(100 * bannedPlayers[i].mutualPercentAgainstSelf + 100 * bannedPlayers[i].mutualPercentAgainstUser / 2, 2);
+              bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore + average;
             }
 
             sortedBannedPlayers = bannedPlayers.OrderByDescending(o => o.similarityscore).ToList();
@@ -310,8 +333,15 @@ namespace steamPlayerInvestigator.Forms
                 steamSimilarAccountCreatedLabel.Text = "Account Created: " + UnixTimeToDateTime(sortedBannedPlayers[0].timecreated);
             }
 
-            steamSimilarAccountClanLabel.Text = "Primary Clan ID: " + sortedBannedPlayers[0].primaryclanid;
-
+            if(sortedBannedPlayers[0].primaryclanid == null)
+            {
+                steamSimilarAccountClanLabel.Text = "Primary Clan ID: Unknown";
+            }
+            else
+            {
+                steamSimilarAccountClanLabel.Text = "Primary Clan ID: " + sortedBannedPlayers[0].primaryclanid;
+            }
+            
             if (sortedBannedPlayers[0].loccountrycode == "" || sortedBannedPlayers[0].loccountrycode == null)
             {
                 steamSimilarAccountCountryCodeLabel.Text = "Country Code: Unknown";
@@ -364,7 +394,12 @@ namespace steamPlayerInvestigator.Forms
                 steamTimeCreatedEffectLabel.Text = "-5";
             }
 
-            if (steamUser.primaryclanid == sortedBannedPlayers[0].primaryclanid)
+            if(steamUser.primaryclanid == null || sortedBannedPlayers[0].primaryclanid == null)
+            {
+                clanIdLabel.Text = "A comparison isn't possible";
+                steamPrimaryClanEffectLabel.Text = "0";
+            }
+            else if (steamUser.primaryclanid == sortedBannedPlayers[0].primaryclanid)
             {
                 clanIdLabel.Text = "Primary clans are the same";
                 steamPrimaryClanEffectLabel.Text = "+5";
@@ -391,6 +426,53 @@ namespace steamPlayerInvestigator.Forms
                 steamCountryCodeEffectLabel.Text = "-5";
             }
 
+            steamUserFriendSimilaritySelfLabel.Text = "Friend Similarity: " + Math.Round(100 * sortedBannedPlayers[0].mutualPercentAgainstSelf, 2).ToString() + "%";
+            steamUserFriendSimilarityUserLabel.Text = "Friend Similarity: " + Math.Round(100 * sortedBannedPlayers[0].mutualPercentAgainstUser, 2).ToString() + "%";
+
+            if(steamUser.lastlogoff == 0)
+            {
+                steamUserAccountLogoffLabel.Text = "Last Logoff: Unknown";
+            }
+            else
+            {
+                steamUserAccountLogoffLabel.Text = "Last Logoff: " + UnixTimeToDateTime(steamUser.lastlogoff).ToString();
+            }
+
+            if(sortedBannedPlayers[0].lastlogoff == 0)
+            {
+                steamSimilarAccountLogOffLabel.Text = "Last Logoff: Unknown";
+            }
+            else
+            {
+                steamSimilarAccountLogOffLabel.Text = "Last Logoff: " + UnixTimeToDateTime(sortedBannedPlayers[0].lastlogoff).ToString();
+            }
+
+            if (steamUser.lastlogoff == 0 || sortedBannedPlayers[0].lastlogoff == 0)
+            {
+                LogoffLabel.Text = "Comparison can't be made";
+                steamLogoffEffectLabel.Text = "0";
+            }
+            else
+            {
+                DateTime steamUserLogOff = UnixTimeToDateTime(steamUser.lastlogoff);
+                DateTime bannedUserLogOff = UnixTimeToDateTime(sortedBannedPlayers[0].lastlogoff);
+                int hours = (steamUserLogOff - bannedUserLogOff).Hours;
+                if (hours == 0)
+                {
+                    LogoffLabel.Text = "Users logged off within an hour of each other";
+                    steamLogoffEffectLabel.Text = "+10";
+                }
+                else
+                {
+                    LogoffLabel.Text = "Users didn't log off at similar times";
+                    steamLogoffEffectLabel.Text = "-10";
+                }
+            }
+
+            friendSimilarityLabel.Text = "Average friend similarity is " + Math.Round(100 * sortedBannedPlayers[0].mutualPercentAgainstSelf + 100 * sortedBannedPlayers[0].mutualPercentAgainstUser / 2, 2).ToString() + "%";
+            friendSimilarityEffectLabel.Text = "+" + Math.Round(100 * sortedBannedPlayers[0].mutualPercentAgainstSelf + 100 * sortedBannedPlayers[0].mutualPercentAgainstUser / 2, 2).ToString();
+            
+
             similarityScoreLabel.Text = "Overall Similarity Score: " + Math.Round(sortedBannedPlayers[0].similarityscore, 2);
 
             Show();
@@ -402,7 +484,7 @@ namespace steamPlayerInvestigator.Forms
             for (int i = 0; i < bannedPlayers.Count; i++)
             {
                 bannedPlayers[i].mutualFriendCount = 0;
-                if (bannedPlayers[i].friendsOfFriends == null)
+                if (bannedPlayers[i].friendsOfFriends == null || bannedPlayers[i].friendsOfFriends.friendslist == null)
                 {
                     continue;
                 }
@@ -416,7 +498,8 @@ namespace steamPlayerInvestigator.Forms
                         }
                     }
                 }
-                bannedPlayers[i].mutualPercent = (double)bannedPlayers[i].mutualFriendCount / (double)pSteamFriendsSummary.response.players.Count;
+                bannedPlayers[i].mutualPercentAgainstUser = (double)bannedPlayers[i].mutualFriendCount / (double)pSteamFriendsSummary.response.players.Count;
+                bannedPlayers[i].mutualPercentAgainstSelf = (double)bannedPlayers[i].mutualFriendCount / (double)bannedPlayers[i].friendsOfFriends.friendslist.friends.Count;
             }
             return bannedPlayers;
         }

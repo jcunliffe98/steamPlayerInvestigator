@@ -40,11 +40,11 @@ namespace steamPlayerInvestigator.Forms
             uniqueSteamIds = new List<string>();
 
             // Gets all unique ids and puts them in a list
-            for(int i = 0; i < sortedBannedPlayers.Count; i++)
+            for (int i = 0; i < sortedBannedPlayers.Count; i++)
             {
-                for(int a = 0; a < sortedBannedPlayers[i].Count; a++)
+                for (int a = 0; a < sortedBannedPlayers[i].Count; a++)
                 {
-                    if(uniqueSteamIds.Contains(sortedBannedPlayers[i][a].steamid))
+                    if (uniqueSteamIds.Contains(sortedBannedPlayers[i][a].steamid))
                     {
                         continue;
                     }
@@ -67,7 +67,7 @@ namespace steamPlayerInvestigator.Forms
 
             if (sortedBannedPlayers.Count == 1)
             {
-                for(int i = 0; i < bannedPlayersSingleList.Count; i++)
+                for (int i = 0; i < bannedPlayersSingleList.Count; i++)
                 {
                     List<Player> tempList = new List<Player>();
                     tempList.Add(bannedPlayersSingleList[i]);
@@ -81,7 +81,7 @@ namespace steamPlayerInvestigator.Forms
                     List<Player> tempList = new List<Player>();
                     for (int i = 0; i < bannedPlayersSingleList.Count; i++)
                     {
-                        if(uniqueSteamIds[a] == bannedPlayersSingleList[i].steamid)
+                        if (uniqueSteamIds[a] == bannedPlayersSingleList[i].steamid)
                         {
                             tempList.Add(bannedPlayersSingleList[i]);
                         }
@@ -103,7 +103,7 @@ namespace steamPlayerInvestigator.Forms
 
             double totalTimeSeconds = 0;
 
-            for(int i = 0; i < userLogOffs.Count; i++)
+            for (int i = 0; i < userLogOffs.Count; i++)
             {
                 totalTimeSeconds += userLogOffs[i];
             }
@@ -115,7 +115,7 @@ namespace steamPlayerInvestigator.Forms
             steamUser = pSteamUser[pSteamUser.Count - 1];
             steamUser.averageLogOffLocal = timeUserLogOff;
 
-            if(averageTimeSeconds == 0)
+            if (averageTimeSeconds == 0)
             {
                 steamUserAccountLogoffLabel.Text = "Average Logoff Time: Unavailable";
             }
@@ -128,10 +128,10 @@ namespace steamPlayerInvestigator.Forms
 
             userLogOffs.Clear();
 
-            for(int i = 0; i < playerInstances.Count; i++)
+            for (int i = 0; i < playerInstances.Count; i++)
             {
                 totalTimeSeconds = 0;
-                for(int a = 0; a < playerInstances[i].Count; a++)
+                for (int a = 0; a < playerInstances[i].Count; a++)
                 {
                     averageLogOffUser = UnixTimeToDateTime(playerInstances[i][a].lastlogoff);
                     string temp = averageLogOffUser.ToString("HH:mm");
@@ -155,14 +155,23 @@ namespace steamPlayerInvestigator.Forms
 
                 sortedBannedPlayersList = sortedBannedPlayers[i];
 
-                for(int b = 0; b < sortedBannedPlayersList.Count; b++)
+                for (int b = 0; b < sortedBannedPlayersList.Count; b++)
                 {
-                    if(sortedBannedPlayersList[b].similarityscore > highestScore.similarityscore)
+                    if (sortedBannedPlayersList[b].similarityscore > highestScore.similarityscore)
                     {
                         highestScore = sortedBannedPlayersList[b];
                     }
                 }
             }
+
+            SetLabels(pSteamUser);
+
+            Show();
+            Console.ReadLine();
+        }
+
+        private void SetLabels(List<Player> pSteamUser)
+        {
             steamUserAvatar.ImageLocation = steamUser.avatarfull;
             steamUserNameLabel.Text = "Steam Name: " + steamUser.personaname;
             steamUserUrlLabel.Text = "Profile Url: " + steamUser.profileurl;
@@ -363,11 +372,8 @@ namespace steamPlayerInvestigator.Forms
 
             similarityScoreLabel.Text = "Overall Similarity Score: " + Math.Round(highestScore.similarityscore, 2);
             instanceCountLabel.Text = "Number of local instances: " + pSteamUser.Count;
-            highestScore.mutualPercent = highestScore.mutualPercent * 100;
-            mostSimilarAccountFriendSimilarityLabel.Text = "Friend Similarity: " + Math.Round(highestScore.mutualPercent).ToString() + "%";
-
-            Show();
-            Console.ReadLine();
+            highestScore.mutualPercentAgainstUser = highestScore.mutualPercentAgainstUser * 100;
+            mostSimilarAccountFriendSimilarityLabel.Text = "Friend Similarity: " + Math.Round(highestScore.mutualPercentAgainstUser).ToString() + "%";
         }
 
         public Player getPlayer(SummaryRoot pSteamFriendsSummary, int i, int y)
@@ -478,7 +484,7 @@ namespace steamPlayerInvestigator.Forms
                         }
                     }
                 }
-                bannedPlayers[i].mutualPercent = (double)bannedPlayers[i].mutualFriendCount / (double)pSteamFriendsSummary.response.players.Count;
+                bannedPlayers[i].mutualPercentAgainstUser = (double)bannedPlayers[i].mutualFriendCount / (double)pSteamFriendsSummary.response.players.Count;
             }
             return bannedPlayers;
         }
