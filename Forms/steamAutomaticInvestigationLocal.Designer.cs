@@ -84,6 +84,10 @@ namespace steamPlayerInvestigator.Forms
             this.label14 = new System.Windows.Forms.Label();
             this.steamUserFriendSimilarityLabel = new System.Windows.Forms.Label();
             this.mostSimilarAccountFriendSimilarityLabel = new System.Windows.Forms.Label();
+            this.LogoffLabel = new System.Windows.Forms.Label();
+            this.friendSimilarityLabel = new System.Windows.Forms.Label();
+            this.steamLogoffEffectLabel = new System.Windows.Forms.Label();
+            this.friendSimilarityEffectLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.steamSimilarAccountAvatar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.steamUserAvatar)).BeginInit();
             this.SuspendLayout();
@@ -613,11 +617,55 @@ namespace steamPlayerInvestigator.Forms
             this.mostSimilarAccountFriendSimilarityLabel.TabIndex = 97;
             this.mostSimilarAccountFriendSimilarityLabel.Text = "Friend Similarity:";
             // 
+            // LogoffLabel
+            // 
+            this.LogoffLabel.AutoSize = true;
+            this.LogoffLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.LogoffLabel.Location = new System.Drawing.Point(1086, 316);
+            this.LogoffLabel.Name = "LogoffLabel";
+            this.LogoffLabel.Size = new System.Drawing.Size(148, 20);
+            this.LogoffLabel.TabIndex = 100;
+            this.LogoffLabel.Text = "Similar logoff period";
+            // 
+            // friendSimilarityLabel
+            // 
+            this.friendSimilarityLabel.AutoSize = true;
+            this.friendSimilarityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.friendSimilarityLabel.Location = new System.Drawing.Point(1086, 348);
+            this.friendSimilarityLabel.Name = "friendSimilarityLabel";
+            this.friendSimilarityLabel.Size = new System.Drawing.Size(120, 20);
+            this.friendSimilarityLabel.TabIndex = 102;
+            this.friendSimilarityLabel.Text = "Friend Similarity";
+            // 
+            // steamLogoffEffectLabel
+            // 
+            this.steamLogoffEffectLabel.AutoSize = true;
+            this.steamLogoffEffectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.steamLogoffEffectLabel.Location = new System.Drawing.Point(1613, 316);
+            this.steamLogoffEffectLabel.Name = "steamLogoffEffectLabel";
+            this.steamLogoffEffectLabel.Size = new System.Drawing.Size(36, 20);
+            this.steamLogoffEffectLabel.TabIndex = 103;
+            this.steamLogoffEffectLabel.Text = "+10";
+            // 
+            // friendSimilarityEffectLabel
+            // 
+            this.friendSimilarityEffectLabel.AutoSize = true;
+            this.friendSimilarityEffectLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.friendSimilarityEffectLabel.Location = new System.Drawing.Point(1613, 348);
+            this.friendSimilarityEffectLabel.Name = "friendSimilarityEffectLabel";
+            this.friendSimilarityEffectLabel.Size = new System.Drawing.Size(36, 20);
+            this.friendSimilarityEffectLabel.TabIndex = 104;
+            this.friendSimilarityEffectLabel.Text = "+10";
+            // 
             // steamAutomaticInvestigationLocal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1684, 496);
+            this.Controls.Add(this.friendSimilarityEffectLabel);
+            this.Controls.Add(this.steamLogoffEffectLabel);
+            this.Controls.Add(this.friendSimilarityLabel);
+            this.Controls.Add(this.LogoffLabel);
             this.Controls.Add(this.mostSimilarAccountFriendSimilarityLabel);
             this.Controls.Add(this.steamUserFriendSimilarityLabel);
             this.Controls.Add(this.instanceCountLabel);
@@ -738,5 +786,9 @@ namespace steamPlayerInvestigator.Forms
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label steamUserFriendSimilarityLabel;
         private System.Windows.Forms.Label mostSimilarAccountFriendSimilarityLabel;
+        private System.Windows.Forms.Label LogoffLabel;
+        private System.Windows.Forms.Label friendSimilarityLabel;
+        private System.Windows.Forms.Label steamLogoffEffectLabel;
+        private System.Windows.Forms.Label friendSimilarityEffectLabel;
     }
 }

@@ -45,5 +45,6 @@ namespace steamPlayerInvestigator
         public double levDistanceUrl { get; set; }
         public FriendsRoot friendsOfFriends { get; set; }
         public TimeSpan averageLogOffLocal { get; set; }
+        public bool logOffAvailable { get; set; }
     }
 }

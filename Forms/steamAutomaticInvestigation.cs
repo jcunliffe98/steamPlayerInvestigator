@@ -139,14 +139,14 @@ namespace steamPlayerInvestigator.Forms
                     bannedPlayers[i].createdAfter = true;
 
                     // Will need to adjust later
-                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore + 5;
+                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore - 5;
                 }
                 else
                 {
                     bannedPlayers[i].createdAfter = false;
 
                     // Will need to adjust later
-                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore - 5;
+                    bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore + 5;
                 }
 
                 if (bannedPlayers[i].loccountrycode == null || steamUser.loccountrycode == null)
@@ -385,13 +385,13 @@ namespace steamPlayerInvestigator.Forms
 
             if (sortedBannedPlayers[0].createdAfter == true)
             {
-                timeCreatedLabel.Text = "Similar account was created after user account";
-                steamTimeCreatedEffectLabel.Text = "+5";
+                timeCreatedLabel.Text = "User account was created before similar account";
+                steamTimeCreatedEffectLabel.Text = "-5";
             }
             else
             {
-                timeCreatedLabel.Text = "User account was created before similar account";
-                steamTimeCreatedEffectLabel.Text = "-5";
+                timeCreatedLabel.Text = "User account was created after similar account";
+                steamTimeCreatedEffectLabel.Text = "+5";
             }
 
             if(steamUser.primaryclanid == null || sortedBannedPlayers[0].primaryclanid == null)
