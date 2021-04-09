@@ -214,7 +214,9 @@ namespace steamPlayerInvestigator.Forms
                     }
                 }
 
-              double average = Math.Round(100 * bannedPlayers[i].mutualPercentAgainstSelf + 100 * bannedPlayers[i].mutualPercentAgainstUser / 2, 2);
+              double average = bannedPlayers[i].mutualPercentAgainstSelf + bannedPlayers[i].mutualPercentAgainstUser;
+              average = average / 2;
+              average = average * 100;
               bannedPlayers[i].similarityscore = bannedPlayers[i].similarityscore + average;
             }
 
@@ -469,8 +471,11 @@ namespace steamPlayerInvestigator.Forms
                 }
             }
 
-            friendSimilarityLabel.Text = "Average friend similarity is " + Math.Round(100 * sortedBannedPlayers[0].mutualPercentAgainstSelf + 100 * sortedBannedPlayers[0].mutualPercentAgainstUser / 2, 2).ToString() + "%";
-            friendSimilarityEffectLabel.Text = "+" + Math.Round(100 * sortedBannedPlayers[0].mutualPercentAgainstSelf + 100 * sortedBannedPlayers[0].mutualPercentAgainstUser / 2, 2).ToString();
+            double averageLabel = sortedBannedPlayers[0].mutualPercentAgainstSelf + sortedBannedPlayers[0].mutualPercentAgainstUser;
+            averageLabel = averageLabel / 2;
+            averageLabel = averageLabel * 100;
+            friendSimilarityLabel.Text = "Average friend similarity is " + Math.Round(averageLabel, 2).ToString() + "%";
+            friendSimilarityEffectLabel.Text = "+" + Math.Round(averageLabel, 2).ToString();
             
 
             similarityScoreLabel.Text = "Overall Similarity Score: " + Math.Round(sortedBannedPlayers[0].similarityscore, 2);

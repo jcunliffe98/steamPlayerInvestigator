@@ -46,5 +46,10 @@ namespace steamPlayerInvestigator
         public FriendsRoot friendsOfFriends { get; set; }
         public TimeSpan averageLogOffLocal { get; set; }
         public bool logOffAvailable { get; set; }
+        public double averageStatus { get; set; }
+        public double averageClanId { get; set; }
+        public double averageCountryCode { get; set; }
+        public double averageFriendSelf { get; set; }
+        public double averageFriendUser { get; set; }
     }
 }
